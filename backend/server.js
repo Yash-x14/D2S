@@ -60,7 +60,7 @@ const io = new Server(httpServer, {
         credentials: true
     }
 });
-const PORT = process.env.PORT || 10000;
+const PORT = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET || 'dev_jwt_secret_change_me';
 
 // CORS configuration to allow both frontends
