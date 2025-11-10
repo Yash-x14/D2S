@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Svasthyaa E-Commerce</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img src="logo.png" alt="Svasthyaa Logo" class="website-logo">
+        </div>
+        <div class="navbar-right">
+            <button class="search-btn"><i class="fas fa-search"></i></button>
+            <a href="index.html" class="nav-btn">Home</a>
+            <a href="variety.html" class="nav-btn">All Products</a>
+            <a href="blog.html" class="nav-btn">Blog</a>
+            <a href="contact.html" class="nav-btn">Contact</a>
+            <a href="cart.html" class="nav-btn cart-btn active"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+            <a href="/auth" class="nav-btn"><i class="fas fa-user"></i> Customer Login</a>
+        </div>
+    </nav>
+
+    <!-- Cart Section -->
+    <section class="cart-section">
+        <div class="container">
+            <h1 class="page-title">Shopping Cart</h1>
+
+            <div class="cart-layout">
+                <!-- Cart Items Section -->
+                <div class="cart-items-section">
+                    <h3 class="section-title">Shopping Cart</h3>
+                    <div class="cart-items-container">
+                        <!-- Cart items will be dynamically loaded here -->
+                    </div>
+                </div>
+
+                <!-- Order Summary Section (Right Side) -->
+                <div class="order-summary-section">
+                    <div class="order-summary">
+                        <h3>Order Summary</h3>
+                        <div class="summary-item">
+                            <span>Subtotal (0 items)</span>
+                            <span>Rs. 0.00</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Shipping</span>
+                            <span>Rs. 0.00</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Tax</span>
+                            <span>Rs. 0.00</span>
+                        </div>
+                        <div class="summary-item total">
+                            <span>Total</span>
+                            <span>Rs. 0.00</span>
+                        </div>
+
+                        <button class="checkout-btn">
+                            <i class="fas fa-lock"></i>
+                            Proceed to Checkout
+                        </button>
+
+                        <a href="variety.html" class="continue-shopping-btn">
+                            <i class="fas fa-arrow-left"></i> Continue Shopping
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="utils.js"></script>
+    <script src="cart.js"></script>
+</body>
+
+</html>

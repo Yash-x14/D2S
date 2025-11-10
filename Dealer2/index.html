@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dealer Dashboard - Svasthyaa E-Commerce</title>
+    <link rel="stylesheet" href="/dealer2-site/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-store"></i> Dealer Dashboard</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="menu-item">
+                <a href="#dashboard" class="menu-link active">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#orders" class="menu-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Orders</span>
+                    <span class="badge">0</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#order-processing" class="menu-link">
+                    <i class="fas fa-tasks"></i>
+                    <span>Order Processing</span>
+                    <span class="badge">0</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#products" class="menu-link">
+                    <i class="fas fa-box"></i>
+                    <span>Products</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#inventory" class="menu-link">
+                    <i class="fas fa-warehouse"></i>
+                    <span>Inventory</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#bookkeeping" class="menu-link">
+                    <i class="fas fa-calculator"></i>
+                    <span>Bookkeeping</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#analytics" class="menu-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#customers" class="menu-link">
+                    <i class="fas fa-users"></i>
+                    <span>Customers</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#settings" class="menu-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Dealer Portal</h3>
+        </div>
+        <div class="nav-right">
+            <div class="dealer-info">
+                <div class="dealer-avatar" id="dealer-avatar-nav">D</div>
+                <span class="dealer-name" id="dealer-name-nav">Dealer</span>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Page -->
+        <div id="dashboard" class="page active">
+            <div class="page-header">
+                <h1 class="page-title">Dashboard Overview</h1>
+                <p class="page-subtitle">Welcome back! Here's what's happening with your business.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Total Orders</span>
+                        <div class="stat-icon primary">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="total-orders-stat">0</div>
+                    <div class="stat-change positive" id="order-growth">Loading...</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Total Revenue</span>
+                        <div class="stat-icon success">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="total-revenue-stat">₹0</div>
+                    <div class="stat-change positive" id="revenue-growth">Loading...</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Pending Orders</span>
+                        <div class="stat-icon warning">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="pending-orders-stat">0</div>
+                    <div class="stat-change">Requires attention</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Total Products</span>
+                        <div class="stat-icon primary">
+                            <i class="fas fa-box"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="total-products-stat">0</div>
+                    <div class="stat-change positive">Active products</div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-chart-bar"></i> Activity Analysis</h3>
+                    </div>
+                    <div class="card-body" id="activity-analysis">
+                        <div class="loading">
+                            <div class="spinner"></div>Analyzing activity...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-tachometer-alt"></i> Performance Metrics</h3>
+                    </div>
+                    <div class="card-body" id="performance-metrics">
+                        <div class="loading">
+                            <div class="spinner"></div>Loading metrics...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-history"></i> Activity Feed</h3>
+                    </div>
+                    <div class="card-body" id="activity-feed" style="max-height: 400px; overflow-y: auto;">
+                        <div class="loading">
+                            <div class="spinner"></div>Loading activity...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-star"></i> Top Products</h3>
+                    </div>
+                    <div class="card-body" id="top-products">
+                        <div class="loading">
+                            <div class="spinner"></div>Loading top products...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-chart-line"></i> Order Trends (Last 7 Days)</h3>
+                    </div>
+                    <div class="card-body" id="order-trends" style="min-height: 200px;">
+                        <div class="loading">
+                            <div class="spinner"></div>Loading trends...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-shopping-bag"></i> Recent Orders</h3>
+                    </div>
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-orders-body">
+                                <tr>
+                                    <td colspan="4" class="loading">
+                                        <div class="spinner"></div>Loading...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Page -->
+        <div id="products" class="page">
+            <div class="page-header">
+                <h1 class="page-title">Product Management</h1>
+                <p class="page-subtitle">Manage your product catalog</p>
+            </div>
+
+            <div class="card" id="product-form-section">
+                <div class="card-header">
+                    <h3 class="card-title" id="form-title">Add New Product</h3>
+                    <button class="btn btn-outline" id="cancel-edit-btn" style="display: none;" onclick="productsPage.cancelEdit()">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+                <form id="add-product-form">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label class="form-label">Product Name *</label>
+                            <input type="text" id="product-name" name="name" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Price (₹) *</label>
+                            <input type="number" id="product-price" name="price" class="form-input" step="0.01" min="0" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description *</label>
+                        <textarea id="product-description" name="description" class="form-textarea" required></textarea>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label class="form-label">Category *</label>
+                            <select id="product-category" name="category" class="form-select" required>
+                                <option value="">Select Category</option>
+                                <option value="snacks">Snacks</option>
+                                <option value="beverages">Beverages</option>
+                                <option value="dairy">Dairy</option>
+                                <option value="health">Health</option>
+                                <option value="organic">Organic</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Image URL *</label>
+                            <input type="url" id="product-image" name="image" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Weight (Optional)</label>
+                            <select id="product-weight" name="weight" class="form-select">
+                                <option value="">Select Weight</option>
+                                <option value="100 Gms">100 Gms</option>
+                                <option value="200 Gms" selected>200 Gms</option>
+                                <option value="250 Gms">250 Gms</option>
+                                <option value="500 Gms">500 Gms</option>
+                                <option value="1 Kg">1 Kg</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label class="form-label">Available Stock *</label>
+                            <input type="number" id="product-stock" name="stock" class="form-input" min="0" required>
+                            <small style="color: #6b7280; font-size: 12px;">Current quantity in inventory</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Minimum Stock Threshold *</label>
+                            <input type="number" id="product-min-stock" name="minStock" class="form-input" min="0" value="10" required>
+                            <small style="color: #6b7280; font-size: 12px;">Alert when stock falls below this</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">SKU/Product Code (Optional)</label>
+                            <input type="text" id="product-sku" name="sku" class="form-input" placeholder="e.g., PROD-001">
+                            <small style="color: #6b7280; font-size: 12px;">Unique product identifier</small>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 10px;">
+                        <div class="form-group">
+                            <label class="form-label" style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" id="product-featured" name="featured" style="width: auto;">
+                                <span>Featured Product</span>
+                            </label>
+                            <small style="color: #6b7280; font-size: 12px;">Show this product prominently</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" id="product-active" name="active" checked style="width: auto;">
+                                <span>Active Status</span>
+                            </label>
+                            <small style="color: #6b7280; font-size: 12px;">Product is visible to customers</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tags (Optional)</label>
+                            <input type="text" id="product-tags" name="tags" class="form-input" placeholder="tag1, tag2, tag3">
+                            <small style="color: #6b7280; font-size: 12px;">Comma-separated tags for search</small>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Product
+                    </button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">All Products</h3>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Category</th>
+                                <th>Available Stock</th>
+                                <th>Min Stock</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-table-body">
+                            <tr>
+                                <td colspan="7" class="loading">
+                                    <div class="spinner"></div>Loading products...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Page -->
+        <div id="orders" class="page">
+            <div class="page-header">
+                <h1 class="page-title">Orders</h1>
+                <p class="page-subtitle">View and manage all orders</p>
+            </div>
+
+            <div class="orders-columns-container">
+                <!-- Approved Orders Column -->
+                <div class="orders-column">
+                    <div class="orders-column-header approved">
+                        <h3><i class="fas fa-check-circle"></i> Approved Orders</h3>
+                        <span class="orders-count" id="approved-count">0</span>
+                    </div>
+                    <div class="orders-column-body" id="approved-orders-body">
+                        <div class="loading">
+                            <div class="spinner"></div>Loading approved orders...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rejected Orders Column -->
+                <div class="orders-column">
+                    <div class="orders-column-header rejected">
+                        <h3><i class="fas fa-times-circle"></i> Rejected Orders</h3>
+                        <span class="orders-count" id="rejected-count">0</span>
+                    </div>
+                    <div class="orders-column-body" id="rejected-orders-body">
+                        <div class="loading">
+                            <div class="spinner"></div>Loading rejected orders...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Complete Orders Column -->
+                <div class="orders-column">
+                    <div class="orders-column-header complete">
+                        <h3><i class="fas fa-list"></i> Complete Orders</h3>
+                        <span class="orders-count" id="complete-count">0</span>
+                    </div>
+                    <div class="orders-column-body" id="complete-orders-body">
+                        <div class="loading">
+                            <div class="spinner"></div>Loading all orders...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Processing Page -->
+        <div id="order-processing" class="page">
+            <div class="page-header">
+                <h1 class="page-title">Order Processing</h1>
+                <p class="page-subtitle">Approve or reject pending orders</p>
+            </div>
+
+            <div class="card">
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer Info</th>
+                                <th>Order Items</th>
+                                <th>Shipping Address</th>
+                                <th>Order Total</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pending-orders-body">
+                            <tr>
+                                <td colspan="7" class="loading">
+                                    <div class="spinner"></div>Loading pending orders...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventory Page -->
+        <div id="inventory" class="page">
+            <div class="page-header">
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <div>
+                        <h1 class="page-title">Inventory Management</h1>
+                        <p class="page-subtitle">Track and manage your product stock levels, values, and low stock alerts</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="inventoryPage.openManageInventoryModal()" style="display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-edit"></i> Manage Inventory
+                    </button>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Total Items</span>
+                        <div class="stat-icon primary">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="total-items-stat">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Low Stock Items</span>
+                        <div class="stat-icon warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="low-stock-stat">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Total Value</span>
+                        <div class="stat-icon success">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="total-value-stat">₹0</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="table-container">
+                    <div style="margin-bottom: 16px; padding: 12px; background: #f9fafb; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-info-circle" style="color: var(--primary-color);"></i>
+                            <span style="font-size: 0.9em; color: var(--text-secondary);">
+                                Showing <strong id="inventory-count-display">0</strong> of your products
+                            </span>
+                        </div>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <button class="btn btn-sm btn-outline" onclick="inventoryPage.filterInventory('all')" id="filter-all">
+                                <i class="fas fa-list"></i> All Products
+                            </button>
+                            <button class="btn btn-sm btn-outline" onclick="inventoryPage.filterInventory('low')" id="filter-low">
+                                <i class="fas fa-exclamation-triangle"></i> Low Stock
+                            </button>
+                            <button class="btn btn-sm btn-outline" onclick="inventoryPage.sortInventory('value')" id="sort-value">
+                                <i class="fas fa-sort-amount-down"></i> Sort by Value
+                            </button>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Current Stock</th>
+                                <th>Min Stock</th>
+                                <th>Item Value</th>
+                                <th>Update Stock</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventory-table-body">
+                            <tr>
+                                <td colspan="6" class="loading">
+                                    <div class="spinner"></div>Loading inventory...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bookkeeping Page -->
+        <div id="bookkeeping" class="page">
+            <div class="page-header">
+                <h1 class="page-title">Financial Bookkeeping</h1>
+                <p class="page-subtitle">Track your income and expenses</p>
+            </div>
+
+            <!-- Period Selection and Download Controls -->
+            <div class="bookkeeping-controls" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding: 16px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <label for="period-select" style="font-weight: 600; color: #333;">Select Period:</label>
+                    <select id="period-select" class="form-input" style="min-width: 150px; padding: 8px 12px;">
+                        <option value="daily">Daily</option>
+                        <option value="monthly" selected>Monthly</option>
+                        <option value="quarterly">Quarterly</option>
+                        <option value="yearly">Yearly</option>
+                    </select>
+                </div>
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <button id="download-excel-btn" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px; padding: 10px 20px; font-size: 14px; font-weight: 600;">
+                        <i class="fas fa-file-excel"></i>
+                        Download Excel Sheet
+                    </button>
+                    <span id="current-view-indicator" style="color: #666; font-size: 14px;">Showing: Current Month</span>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Total Income</span>
+                        <div class="stat-icon success">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="total-income-stat">₹0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Total Expenses</span>
+                        <div class="stat-icon danger">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="total-expenses-stat">₹0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Net Profit</span>
+                        <div class="stat-icon primary">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="net-profit-stat">₹0</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Type</th>
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactions-table-body">
+                            <tr>
+                                <td colspan="7" class="loading">
+                                    <div class="spinner"></div>Loading transactions...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Page -->
+        <div id="analytics" class="page">
+            <div class="page-header">
+                <h1 class="page-title">Analytics & Reports</h1>
+                <p class="page-subtitle">Visualize your business performance</p>
+            </div>
+
+            <!-- Period Selection -->
+            <div class="analytics-controls" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding: 16px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <label for="analytics-period-select" style="font-weight: 600; color: #333;">View Period:</label>
+                    <select id="analytics-period-select" class="form-input" style="min-width: 150px; padding: 8px 12px;">
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly" selected>Monthly</option>
+                        <option value="yearly">Yearly</option>
+                    </select>
+                </div>
+                <button id="refresh-analytics-btn" class="btn btn-secondary" style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-sync-alt"></i>
+                    Refresh Data
+                </button>
+            </div>
+
+            <!-- Key Metrics Cards -->
+            <div class="stats-grid" style="margin-bottom: 24px;">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Total Revenue</span>
+                        <div class="stat-icon success">
+                            <i class="fas fa-rupee-sign"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="total-revenue-stat">₹0</div>
+                    <div class="stat-change" id="revenue-change">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Net Profit</span>
+                        <div class="stat-icon primary">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="net-profit-stat">₹0</div>
+                    <div class="stat-change" id="profit-change">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Stock Margin</span>
+                        <div class="stat-icon warning">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="stock-margin-stat">0%</div>
+                    <div class="stat-change" id="margin-change">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Total Losses</span>
+                        <div class="stat-icon danger">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="total-losses-stat">₹0</div>
+                    <div class="stat-change" id="losses-change">-</div>
+                </div>
+            </div>
+
+            <!-- Product Revenue Chart -->
+            <div class="card" style="margin-bottom: 24px;">
+                <div class="card-header">
+                    <h3 class="card-title">Product Revenue Over Time</h3>
+                </div>
+                <div style="height: 350px;">
+                    <canvas id="product-revenue-chart"></canvas>
+                </div>
+            </div>
+
+            <!-- Revenue, Profit & Loss Chart -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Revenue Trend</h3>
+                    </div>
+                    <div style="height: 300px;">
+                        <canvas id="revenue-chart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Profit & Loss Analysis</h3>
+                    </div>
+                    <div style="height: 300px;">
+                        <canvas id="profit-loss-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stock Margin & Daily Progress -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Stock Margin Progress</h3>
+                    </div>
+                    <div style="height: 300px;">
+                        <canvas id="stock-margin-chart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Daily Progress Update</h3>
+                    </div>
+                    <div style="height: 300px;">
+                        <canvas id="daily-progress-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Most Sold Products -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Top Products by Revenue</h3>
+                </div>
+                <div style="height: 350px;">
+                    <canvas id="products-chart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customers Page -->
+        <div id="customers" class="page">
+            <div class="page-header">
+                <h1 class="page-title">Customers</h1>
+                <p class="page-subtitle">Manage your customer database</p>
+            </div>
+
+            <div id="customers-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+                <div class="loading" style="grid-column: 1 / -1; padding: 40px; text-align: center;">
+                    <div class="spinner"></div>
+                    <p style="margin-top: 16px; color: #666;">Loading customers...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div id="settings" class="page">
+            <div class="page-header">
+                <h1 class="page-title">Settings</h1>
+                <p class="page-subtitle">Manage your account and preferences</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Profile Information</h3>
+                </div>
+                <form id="profile-form">
+                    <div class="form-group">
+                        <label class="form-label">Name / Company Name</label>
+                        <input type="text" id="dealer-name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="dealer-email" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" id="dealer-phone" class="form-input">
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Update Profile
+                    </button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Change Password</h3>
+                </div>
+                <form id="password-form">
+                    <div class="form-group">
+                        <label class="form-label">Current Password</label>
+                        <input type="password" id="current-password" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">New Password</label>
+                        <input type="password" id="new-password" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Confirm New Password</label>
+                        <input type="password" id="confirm-password" class="form-input" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-key"></i> Update Password
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="/dealer2-site/js/api.js"></script>
+    <script src="/dealer2-site/js/socket.js"></script>
+    <script src="/dealer2-site/js/sidebar.js"></script>
+    <script src="/dealer2-site/js/dashboard.js"></script>
+    <script src="/dealer2-site/js/products.js"></script>
+    <script src="/dealer2-site/js/orders.js"></script>
+    <script src="/dealer2-site/js/order-processing.js"></script>
+    <script src="/dealer2-site/js/inventory.js"></script>
+    <script src="/dealer2-site/js/bookkeeping.js"></script>
+    <script src="/dealer2-site/js/analytics.js"></script>
+    <script src="/dealer2-site/js/customers.js"></script>
+    <script src="/dealer2-site/js/settings.js"></script>
+    <script src="/dealer2-site/js/main.js"></script>
+</body>
+
+</html>

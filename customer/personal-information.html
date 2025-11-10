@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Information - Svasthyaa E-Commerce</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img src="logo.png" alt="Svasthyaa Logo" class="website-logo">
+        </div>
+        <div class="navbar-right">
+            <button class="search-btn"><i class="fas fa-search"></i></button>
+            <a href="index.html" class="nav-btn">Home</a>
+            <a href="variety.html" class="nav-btn">All Products</a>
+            <a href="blog.html" class="nav-btn">Blog</a>
+            <a href="contact.html" class="nav-btn">Contact</a>
+            <a href="cart.html" class="nav-btn cart-btn"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+            <a href="/auth" class="nav-btn"><i class="fas fa-user"></i> Customer Login</a>
+        </div>
+    </nav>
+
+    <!-- Personal Information Section -->
+    <section class="personal-info-section">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">
+                    <i class="fas fa-user-circle"></i> Personal Information
+                </h1>
+                <p class="page-subtitle">Manage your account details and preferences</p>
+            </div>
+
+            <div class="personal-info-layout">
+                <!-- Profile Summary Card -->
+                <div class="profile-summary-card" style="grid-column: 1; grid-row: 1;">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="profile-info">
+                        <h3 id="profile-name">Loading...</h3>
+                        <p id="profile-email">Loading...</p>
+                        <p id="profile-member-since">Member since...</p>
+                    </div>
+                    <div class="profile-actions">
+                        <button class="btn-secondary" id="change-avatar-btn">
+                            <i class="fas fa-camera"></i> Change Avatar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Personal Information Form -->
+                <div class="personal-info-form-container" style="grid-column: 2; grid-row: 1;">
+                    <div class="form-card">
+                        <form id="personal-info-form">
+                            <!-- Basic Information -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">
+                                    <i class="fas fa-user"></i> Basic Information
+                                </h3>
+                                <div style="background: #e8f5e9; border-left: 4px solid #4caf50; padding: 12px 16px; margin-bottom: 20px; border-radius: 4px;">
+                                    <p style="margin: 0; color: #2e7d32; font-size: 14px;">
+                                        <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
+                                        <strong>Auto-saved from registration:</strong> Your username and email are automatically saved from your account creation.
+                                    </p>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="name">Full Name (Username) <span class="required">*</span></label>
+                                        <input type="text" id="name" name="name" class="form-input" placeholder="Enter your full name" required>
+                                        <small class="form-hint">This name was saved during account registration</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email Address <span class="required">*</span></label>
+                                        <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email" required readonly>
+                                        <small class="form-hint">Email cannot be changed (saved from registration)</small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number</label>
+                                    <input type="tel" id="phone" name="phone" class="form-input" placeholder="Enter your phone number">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dateOfBirth">Date of Birth</label>
+                                    <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="gender">Gender</label>
+                                    <select id="gender" name="gender" class="form-input">
+                                        <option value="">Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Address Information -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">
+                                    <i class="fas fa-map-marker-alt"></i> Address Information
+                                </h3>
+                                <div class="form-group">
+                                    <label for="address">Street Address</label>
+                                    <input type="text" id="address" name="address" class="form-input" placeholder="Enter your street address">
+                                </div>
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" id="city" name="city" class="form-input" placeholder="Enter your city">
+                                </div>
+                                <div class="form-group">
+                                    <label for="state">State</label>
+                                    <input type="text" id="state" name="state" class="form-input" placeholder="Enter your state">
+                                </div>
+                                <div class="form-group">
+                                    <label for="zipCode">ZIP/Postal Code</label>
+                                    <input type="text" id="zipCode" name="zipCode" class="form-input" placeholder="Enter your ZIP code">
+                                </div>
+                                <div class="form-group">
+                                    <label for="country">Country</label>
+                                    <input type="text" id="country" name="country" class="form-input" placeholder="Enter your country" value="India">
+                                </div>
+                            </div>
+
+                            <!-- Preferences -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">
+                                    <i class="fas fa-cog"></i> Preferences
+                                </h3>
+                                <div class="form-group">
+                                    <label for="language">Language</label>
+                                    <select id="language" name="language" class="form-input">
+                                        <option value="en">English</option>
+                                        <option value="hi">Hindi</option>
+                                        <option value="mr">Marathi</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="currency">Currency</label>
+                                    <select id="currency" name="currency" class="form-input">
+                                        <option value="INR">INR (₹)</option>
+                                        <option value="USD">USD ($)</option>
+                                        <option value="EUR">EUR (€)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Notification Preferences -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">
+                                    <i class="fas fa-bell"></i> Notification Preferences
+                                </h3>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="newsletter" name="newsletter">
+                                        <span>Subscribe to newsletter</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="emailNotifications" name="emailNotifications">
+                                        <span>Email notifications</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="smsNotifications" name="smsNotifications">
+                                        <span>SMS notifications</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Change Password -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">
+                                    <i class="fas fa-lock"></i> Change Password
+                                </h3>
+                                <div style="background: #fff3e0; border-left: 4px solid #ff9800; padding: 12px 16px; margin-bottom: 20px; border-radius: 4px;">
+                                    <p style="margin: 0; color: #e65100; font-size: 14px;">
+                                        <i class="fas fa-shield-alt" style="margin-right: 8px;"></i>
+                                        <strong>Password Security:</strong> Your password is securely stored and cannot be viewed. Use the fields below to change it.
+                                    </p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="currentPassword">Current Password</label>
+                                    <input type="password" id="currentPassword" name="currentPassword" class="form-input" placeholder="Enter current password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPassword">New Password</label>
+                                    <input type="password" id="newPassword" name="newPassword" class="form-input" placeholder="Enter new password" minlength="6">
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmPassword">Confirm New Password</label>
+                                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" placeholder="Confirm new password" minlength="6">
+                                </div>
+                                <small class="form-hint">Leave blank if you don't want to change password. Password must be at least 6 characters long.</small>
+                            </div>
+
+                            <!-- Form Actions -->
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">
+                                    <i class="fas fa-save"></i> Save Changes
+                                </button>
+                                <button type="button" class="btn-secondary" id="cancel-btn">
+                                    <i class="fas fa-times"></i> Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-main">
+            <div class="footer-content">
+                <!-- Company Information Section -->
+                <div class="footer-section company-info">
+                    <div class="logo-section">
+                        <h3 class="footer-logo">Svasthyaa <span class="logo-accent">E-Commerce</span></h3>
+                    </div>
+                    <div class="social-media-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <!-- My Account Section -->
+                <div class="footer-section">
+                    <h4 class="section-title">MY ACCOUNT</h4>
+                    <ul class="footer-links">
+                        <li><a href="personal-information.html">Personal Information</a></li>
+                        <li><a href="order-history.html">Order History</a></li>
+                        <li><a href="download-bills.html">Download Bills</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Us Section -->
+                <div class="footer-section contact-section">
+                    <h4 class="section-title">CONTACT US</h4>
+                    <p class="contact-description">Lorem ipsum dolor sit amet conseret adipiscing elit sed diam nonunem.</p>
+                    <form class="email-subscription">
+                        <input type="email" placeholder="Your Email" class="email-input">
+                        <button type="submit" class="subscribe-btn"><i class="fas fa-envelope"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="utils.js"></script>
+    <script src="personal-information.js"></script>
+</body>
+
+</html>

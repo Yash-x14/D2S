@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Bills - Svasthyaa E-Commerce</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img src="logo.png" alt="Svasthyaa Logo" class="website-logo">
+        </div>
+        <div class="navbar-right">
+            <button class="search-btn"><i class="fas fa-search"></i></button>
+            <a href="index.html" class="nav-btn">Home</a>
+            <a href="variety.html" class="nav-btn">All Products</a>
+            <a href="blog.html" class="nav-btn">Blog</a>
+            <a href="contact.html" class="nav-btn">Contact</a>
+            <a href="cart.html" class="nav-btn cart-btn"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+            <a href="/auth" class="nav-btn"><i class="fas fa-user"></i> Customer Login</a>
+        </div>
+    </nav>
+
+    <!-- Download Bills Section -->
+    <section class="download-bills-section">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">
+                    <i class="fas fa-download"></i> Download Bills
+                </h1>
+                <p class="page-subtitle">Download your order bills and invoices in PDF format</p>
+            </div>
+
+            <!-- Filter and Search Bar -->
+            <div class="bills-filters">
+                <div class="filter-group">
+                    <label for="date-from">From Date:</label>
+                    <input type="date" id="date-from" class="filter-input">
+                </div>
+                <div class="filter-group">
+                    <label for="date-to">To Date:</label>
+                    <input type="date" id="date-to" class="filter-input">
+                </div>
+                <div class="filter-group">
+                    <label for="status-filter">Order Status:</label>
+                    <select id="status-filter" class="filter-select">
+                        <option value="all">All Orders</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="processing">Processing</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="amount-filter">Amount Range:</label>
+                    <select id="amount-filter" class="filter-select">
+                        <option value="all">All Amounts</option>
+                        <option value="0-500">₹0 - ₹500</option>
+                        <option value="500-1000">₹500 - ₹1000</option>
+                        <option value="1000-2000">₹1000 - ₹2000</option>
+                        <option value="2000+">₹2000+</option>
+                    </select>
+                </div>
+                <div class="search-group">
+                    <input type="text" id="bill-search" placeholder="Search by order ID..." class="search-input">
+                    <button class="search-btn" onclick="filterBills()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Download Options -->
+            <div class="download-options">
+                <button class="btn-primary" onclick="downloadAllBills()">
+                    <i class="fas fa-download"></i>
+                    Download All Bills
+                </button>
+                <button class="btn-secondary" onclick="downloadSelectedBills()">
+                    <i class="fas fa-check-square"></i>
+                    Download Selected
+                </button>
+                <button class="btn-secondary" onclick="emailBills()">
+                    <i class="fas fa-envelope"></i>
+                    Email Bills
+                </button>
+                <button class="btn-secondary" onclick="refreshBills()">
+                    <i class="fas fa-sync-alt"></i>
+                    Refresh Bills
+                </button>
+                <button class="btn-danger" onclick="deleteAllBills()">
+                    <i class="fas fa-trash"></i>
+                    Delete All Bills
+                </button>
+            </div>
+
+            <!-- Bills List -->
+            <div class="bills-container">
+                <div class="bills-header">
+                    <div class="select-all">
+                        <input type="checkbox" id="select-all" onchange="toggleSelectAll()">
+                        <label for="select-all">Select All</label>
+                    </div>
+                    <div class="bills-count">
+                        <span id="bills-count">0 bills found</span>
+                    </div>
+                </div>
+
+                <div class="bills-list" id="bills-list">
+                    <!-- Bills will be dynamically generated here -->
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more-container">
+                <button class="btn-secondary load-more-btn" onclick="loadMoreBills()">
+                    <i class="fas fa-plus"></i>
+                    Load More Bills
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bill Preview Modal -->
+    <div id="bill-preview-modal" class="modal-overlay">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3><i class="fas fa-file-pdf"></i> Bill Preview</h3>
+                <button class="close-modal" onclick="closeBillPreview()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="bill-preview-content">
+                    <!-- Bill preview will be generated here -->
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-primary" onclick="downloadCurrentBill()">
+                        <i class="fas fa-download"></i> Download PDF
+                    </button>
+                    <button class="btn-secondary" onclick="printCurrentBill()">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                    <button class="btn-secondary" onclick="closeBillPreview()">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="utils.js"></script>
+    <script src="download-bills.js"></script>
+    <script>
+        // Download Bills JavaScript functionality
+        const API_BASE_URL = window.API_BASE_URL || 'http://localhost:3000';
+        let allBills = [];
+        let filteredBills = [];
+        let selectedBills = new Set();
+        let currentBillPreview = null;
+
+        // Get authentication token
+        function getToken() {
+            return localStorage.getItem('token') || '';
+        }
+
+        // Get user ID
+        function getUserId() {
+            return localStorage.getItem('userId') || '';
+        }
+
+        // Load bills from API
+        async function loadBillsFromAPI() {
+            const userId = getUserId();
+            const token = getToken();
+
+            if (!userId || !token) {
+                console.log('User not logged in');
+                allBills = [];
+                filteredBills = [];
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/bills`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const bills = data.data?.bills || [];
+                    
+                    // Convert bills to format expected by render function
+                    allBills = bills.map(bill => ({
+                        id: bill.billNumber,
+                        billId: bill._id,
+                        orderId: bill.orderId?._id || bill.orderId,
+                        date: bill.createdAt || bill.updatedAt,
+                        status: bill.status || (bill.orderId?.status || 'confirmed'),
+                        items: bill.items.map(item => ({
+                            name: item.name,
+                            quantity: item.quantity,
+                            price: item.price,
+                            total: item.total
+                        })),
+                        subtotal: bill.subtotal,
+                        tax: bill.tax,
+                        delivery: bill.shipping,
+                        total: bill.total,
+                        paymentMethod: bill.paymentMethod || 'COD',
+                        customerName: bill.customerDetails?.name || 'Customer',
+                        customerEmail: bill.customerDetails?.email || '',
+                        customerPhone: bill.customerDetails?.phone || '',
+                        customerAddress: `${bill.customerDetails?.address || ''}, ${bill.customerDetails?.city || ''}, ${bill.customerDetails?.state || ''} ${bill.customerDetails?.zipCode || ''}`.trim(),
+                        dealerDetails: bill.dealerDetails || {}
+                    }));
+                    
+                    filteredBills = [...allBills];
+                    console.log(`✅ Loaded ${allBills.length} bills from API`);
+                } else {
+                    console.error('Failed to load bills from API');
+                    allBills = [];
+                    filteredBills = [];
+                }
+            } catch (error) {
+                console.error('Error loading bills from API:', error);
+                allBills = [];
+                filteredBills = [];
+            }
+        }
+
+        // Mock bills data (fallback)
+        const mockBills = [{
+            id: 'BILL-2024-001',
+            orderId: 'ORD-2024-001',
+            date: '2024-01-15',
+            status: 'delivered',
+            items: [{
+                name: 'Amul Fresh Milk 1L',
+                quantity: 2,
+                price: 60,
+                total: 120
+            }, {
+                name: 'Amul Butter 100g',
+                quantity: 1,
+                price: 50,
+                total: 50
+            }],
+            subtotal: 170,
+            tax: 30.6,
+            delivery: 30,
+            total: 230.6,
+            paymentMethod: 'Credit Card',
+            customerName: 'John Doe',
+            customerEmail: 'john.doe@example.com',
+            customerPhone: '+91 98765 43210',
+            customerAddress: '123 Main Street, Mumbai, Maharashtra 400001'
+        }, {
+            id: 'BILL-2024-002',
+            orderId: 'ORD-2024-002',
+            date: '2024-01-20',
+            status: 'shipped',
+            items: [{
+                name: 'Amul Processed Cheese 200g',
+                quantity: 3,
+                price: 90,
+                total: 270
+            }, {
+                name: 'Amul Masti Dahi 500g',
+                quantity: 2,
+                price: 40,
+                total: 80
+            }],
+            subtotal: 350,
+            tax: 63,
+            delivery: 30,
+            total: 443,
+            paymentMethod: 'UPI',
+            customerName: 'John Doe',
+            customerEmail: 'john.doe@example.com',
+            customerPhone: '+91 98765 43210',
+            customerAddress: '123 Main Street, Mumbai, Maharashtra 400001'
+        }, {
+            id: 'BILL-2024-003',
+            orderId: 'ORD-2024-003',
+            date: '2024-01-25',
+            status: 'processing',
+            items: [{
+                name: 'Amul Pure Ghee 500g',
+                quantity: 1,
+                price: 280,
+                total: 280
+            }],
+            subtotal: 280,
+            tax: 50.4,
+            delivery: 30,
+            total: 360.4,
+            paymentMethod: 'Wallet',
+            customerName: 'John Doe',
+            customerEmail: 'john.doe@example.com',
+            customerPhone: '+91 98765 43210',
+            customerAddress: '123 Main Street, Mumbai, Maharashtra 400001'
+        }];
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Show loading state
+            const billsList = document.getElementById('bills-list');
+            if (billsList) {
+                billsList.innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 48px; color: #ff6b35;"></i>
+                        <p style="margin-top: 16px; color: #6b7280;">Loading bills...</p>
+                    </div>
+                `;
+            }
+
+            // Load bills from API
+            await loadBillsFromAPI();
+            renderBills();
+            updateBillsCount();
+
+            // Set up periodic check for new bills (every 30 seconds)
+            setInterval(async () => {
+                await loadBillsFromAPI();
+                renderBills();
+                updateBillsCount();
+            }, 30000);
+
+            // Check for new bills when page becomes visible
+            document.addEventListener('visibilitychange', async function() {
+                if (!document.hidden) {
+                    await loadBillsFromAPI();
+                    renderBills();
+                    updateBillsCount();
+                }
+            });
+        });
+
+        // Refresh bills from API
+        async function refreshBills() {
+            showToast('Refreshing bills...', 'info');
+            await loadBillsFromAPI();
+            renderBills();
+            updateBillsCount();
+            showToast(`Refreshed ${allBills.length} bills`, 'success');
+        }
+
+        // Filter bills
+        function filterBills() {
+            const dateFrom = document.getElementById('date-from').value;
+            const dateTo = document.getElementById('date-to').value;
+            const status = document.getElementById('status-filter').value;
+            const amount = document.getElementById('amount-filter').value;
+            const search = document.getElementById('bill-search').value.toLowerCase();
+
+            filteredBills = allBills.filter(bill => {
+                // Date filter
+                if (dateFrom && bill.date < dateFrom) return false;
+                if (dateTo && bill.date > dateTo) return false;
+
+                // Status filter
+                if (status !== 'all' && bill.status !== status) return false;
+
+                // Amount filter
+                if (amount !== 'all') {
+                    const billTotal = bill.total;
+                    switch (amount) {
+                        case '0-500':
+                            if (billTotal > 500) return false;
+                            break;
+                        case '500-1000':
+                            if (billTotal < 500 || billTotal > 1000) return false;
+                            break;
+                        case '1000-2000':
+                            if (billTotal < 1000 || billTotal > 2000) return false;
+                            break;
+                        case '2000+':
+                            if (billTotal < 2000) return false;
+                            break;
+                    }
+                }
+
+                // Search filter
+                if (search && !bill.orderId.toLowerCase().includes(search)) return false;
+
+                return true;
+            });
+
+            renderBills();
+            updateBillsCount();
+        }
+
+        // Render bills list
+        function renderBills() {
+            const billsList = document.getElementById('bills-list');
+            billsList.innerHTML = '';
+
+            if (filteredBills.length === 0) {
+                billsList.innerHTML = `
+                    <div class="no-bills">
+                        <i class="fas fa-file-invoice"></i>
+                        <h3>No bills found</h3>
+                        <p>Try adjusting your filters or search criteria</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort bills by date (newest first)
+            const sortedBills = [...filteredBills].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            sortedBills.forEach(bill => {
+                const billElement = createBillElement(bill);
+                billsList.appendChild(billElement);
+            });
+        }
+
+        // Create bill element
+        function createBillElement(bill) {
+            const billElement = document.createElement('div');
+            billElement.className = 'bill-item';
+            billElement.innerHTML = `
+                <div class="bill-checkbox">
+                    <input type="checkbox" id="bill-${bill.id}" value="${bill.id}" onchange="toggleBillSelection('${bill.id}')">
+                </div>
+                <div class="bill-info">
+                    <div class="bill-header">
+                        <div class="bill-title-section">
+                            <h3 class="bill-id">${bill.id}</h3>
+                            <span class="bill-status ${bill.status}">${bill.status.charAt(0).toUpperCase() + bill.status.slice(1)}</span>
+                        </div>
+                    </div>
+                    <div class="bill-details">
+                        <div class="bill-detail-item">
+                            <span class="detail-label"><i class="fas fa-receipt"></i> Order ID:</span>
+                            <span class="detail-value">${bill.orderId}</span>
+                        </div>
+                        <div class="bill-detail-item">
+                            <span class="detail-label"><i class="fas fa-calendar"></i> Date:</span>
+                            <span class="detail-value">${new Date(bill.date).toLocaleDateString()}</span>
+                        </div>
+                        <div class="bill-detail-item">
+                            <span class="detail-label"><i class="fas fa-box"></i> Items:</span>
+                            <span class="detail-value">${bill.items.length} item(s)</span>
+                        </div>
+                        <div class="bill-detail-item">
+                            <span class="detail-label"><i class="fas fa-rupee-sign"></i> Total:</span>
+                            <span class="detail-value total-amount">₹${bill.total.toFixed(2)}</span>
+                        </div>
+                        <div class="bill-detail-item">
+                            <span class="detail-label"><i class="fas fa-credit-card"></i> Payment:</span>
+                            <span class="detail-value">${bill.paymentMethod}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bill-actions">
+                    <button class="btn-secondary" onclick="previewBill('${bill.id}')">
+                        <i class="fas fa-eye"></i>
+                        Preview
+                    </button>
+                    <button class="btn-primary" onclick="downloadBill('${bill.id}')">
+                        <i class="fas fa-download"></i>
+                        Download
+                    </button>
+                </div>
+            `;
+            return billElement;
+        }
+
+        // Toggle bill selection
+        function toggleBillSelection(billId) {
+            if (selectedBills.has(billId)) {
+                selectedBills.delete(billId);
+            } else {
+                selectedBills.add(billId);
+            }
+            updateSelectAllCheckbox();
+        }
+
+        // Toggle select all
+        function toggleSelectAll() {
+            const selectAll = document.getElementById('select-all').checked;
+            selectedBills.clear();
+
+            if (selectAll) {
+                filteredBills.forEach(bill => {
+                    selectedBills.add(bill.id);
+                    document.getElementById(`bill-${bill.id}`).checked = true;
+                });
+            } else {
+                filteredBills.forEach(bill => {
+                    document.getElementById(`bill-${bill.id}`).checked = false;
+                });
+            }
+        }
+
+        // Update select all checkbox
+        function updateSelectAllCheckbox() {
+            const selectAllCheckbox = document.getElementById('select-all');
+            const totalBills = filteredBills.length;
+            const selectedCount = selectedBills.size;
+
+            selectAllCheckbox.checked = selectedCount === totalBills && totalBills > 0;
+            selectAllCheckbox.indeterminate = selectedCount > 0 && selectedCount < totalBills;
+        }
+
+        // Update bills count
+        function updateBillsCount() {
+            document.getElementById('bills-count').textContent = `${filteredBills.length} bills found`;
+        }
+
+        // Preview bill
+        function previewBill(billId) {
+            const bill = allBills.find(b => b.id === billId);
+            if (!bill) return;
+
+            currentBillPreview = bill;
+            const previewContent = generateBillHTML(bill);
+            document.getElementById('bill-preview-content').innerHTML = previewContent;
+            document.getElementById('bill-preview-modal').classList.add('show');
+        }
+
+        // Close bill preview
+        function closeBillPreview() {
+            document.getElementById('bill-preview-modal').classList.remove('show');
+            currentBillPreview = null;
+        }
+
+        // Download single bill
+        function downloadBill(billId) {
+            const bill = allBills.find(b => b.id === billId);
+            if (!bill) {
+                showToast('Bill not found!', 'error');
+                return;
+            }
+
+            try {
+                generatePDF(bill);
+            } catch (error) {
+                console.error('Error generating PDF:', error);
+                showToast('Failed to generate PDF. Please try again.', 'error');
+            }
+        }
+
+        // Download current bill from preview
+        function downloadCurrentBill() {
+            if (currentBillPreview) {
+                generatePDF(currentBillPreview);
+            }
+        }
+
+        // Print current bill
+        function printCurrentBill() {
+            if (currentBillPreview) {
+                const printWindow = window.open('', '_blank');
+                printWindow.document.write(generateBillHTML(currentBillPreview));
+                printWindow.document.close();
+                printWindow.print();
+            }
+        }
+
+        // Download all bills
+        function downloadAllBills() {
+            if (filteredBills.length === 0) {
+                showToast('No bills to download', 'error');
+                return;
+            }
+
+            showToast('Preparing all bills for download...', 'info');
+
+            // Download each bill with a delay to avoid browser blocking
+            filteredBills.forEach((bill, index) => {
+                setTimeout(() => {
+                    generatePDF(bill);
+                }, index * 1000); // 1 second delay between downloads
+            });
+        }
+
+        // Download selected bills
+        function downloadSelectedBills() {
+            if (selectedBills.size === 0) {
+                showToast('Please select bills to download', 'error');
+                return;
+            }
+
+            showToast(`Preparing ${selectedBills.size} bills for download...`, 'info');
+
+            let index = 0;
+            selectedBills.forEach(billId => {
+                const bill = allBills.find(b => b.id === billId);
+                if (bill) {
+                    setTimeout(() => {
+                        generatePDF(bill);
+                    }, index * 1000);
+                    index++;
+                }
+            });
+        }
+
+        // Email bills
+        function emailBills() {
+            if (selectedBills.size === 0) {
+                showToast('Please select bills to email', 'error');
+                return;
+            }
+
+            const email = prompt('Enter email address to send bills:');
+            if (email) {
+                showToast(`Sending ${selectedBills.size} bills to ${email}...`, 'info');
+                // In a real application, this would send the bills via email
+                setTimeout(() => {
+                    showToast('Bills sent successfully!', 'success');
+                }, 2000);
+            }
+        }
+
+        // Delete all bills permanently (Note: This only clears local view, bills remain in database)
+        function deleteAllBills() {
+            if (allBills.length === 0) {
+                showToast('No bills to clear from view', 'error');
+                return;
+            }
+
+            // Direct deletion with single confirmation
+            const confirmed = confirm(
+                `Are you sure you want to clear all ${allBills.length} bills from view?\n\n` +
+                'Note: Bills are stored in the database and will reappear on refresh.'
+            );
+
+            if (confirmed) {
+                // Clear all bills from view (they'll reload on refresh)
+                allBills = [];
+                filteredBills = [];
+                selectedBills.clear();
+
+                // Re-render the bills list
+                renderBills();
+                updateBillsCount();
+
+                // Show success message
+                showToast('Bills cleared from view. Refresh to reload.', 'success');
+            } else {
+                showToast('Action cancelled.', 'info');
+            }
+        }
+
+        // Load more bills
+        function loadMoreBills() {
+            // In a real application, this would load more bills from the server
+            showToast('Loading more bills...', 'info');
+            setTimeout(() => {
+                showToast('No more bills available', 'info');
+            }, 1000);
+        }
+
+        // Generate bill HTML
+        function generateBillHTML(bill) {
+            const dealerDetails = bill.dealerDetails || {};
+            const companyName = dealerDetails.companyName || 'Svasthyaa E-Commerce';
+            const companyAddress = `${dealerDetails.address || '123 Health Street'}, ${dealerDetails.city || 'Mumbai'}, ${dealerDetails.state || 'Maharashtra'} ${dealerDetails.zipCode || '400001'}`;
+            const companyPhone = dealerDetails.phone || '+91 98765 43210';
+            const companyEmail = dealerDetails.email || 'info@svasthyaa.com';
+            const billDate = bill.date ? new Date(bill.date).toLocaleDateString() : new Date().toLocaleDateString();
+            
+            return `
+                <div class="bill-pdf" id="bill-${bill.id}">
+                    <div class="bill-header">
+                        <div class="company-info">
+                            <h1>${companyName}</h1>
+                            <p>Your Trusted Health Partner</p>
+                            <p>${companyAddress}</p>
+                            <p>Phone: ${companyPhone} | Email: ${companyEmail}</p>
+                        </div>
+                        <div class="bill-details">
+                            <h2>INVOICE</h2>
+                            <p><strong>Bill No:</strong> ${bill.id}</p>
+                            <p><strong>Order No:</strong> ${bill.orderId}</p>
+                            <p><strong>Date:</strong> ${billDate}</p>
+                            <p><strong>Status:</strong> ${bill.status.charAt(0).toUpperCase() + bill.status.slice(1)}</p>
+                        </div>
+                    </div>
+
+                    <div class="bill-customer">
+                        <h3>Bill To:</h3>
+                        <p><strong>${bill.customerName}</strong></p>
+                        <p>${bill.customerEmail}</p>
+                        <p>${bill.customerPhone}</p>
+                        <p>${bill.customerAddress}</p>
+                    </div>
+
+                    <div class="bill-items">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${bill.items.map(item => `
+                                    <tr>
+                                        <td>${item.name}</td>
+                                        <td>${item.quantity}</td>
+                                        <td>₹${item.price}</td>
+                                        <td>₹${item.total}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="bill-summary">
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span>₹${bill.subtotal.toFixed(2)}</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Tax (GST):</span>
+                            <span>₹${bill.tax.toFixed(2)}</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Delivery Charges:</span>
+                            <span>₹${bill.delivery.toFixed(2)}</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total Amount:</span>
+                            <span>₹${bill.total.toFixed(2)}</span>
+                        </div>
+                    </div>
+
+                    <div class="bill-footer">
+                        <p><strong>Payment Method:</strong> ${bill.paymentMethod}</p>
+                        <p>Thank you for your business!</p>
+                        <p>For any queries, contact us at support@svasthyaa.com</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Generate PDF
+        function generatePDF(bill) {
+            // Check if jsPDF is available
+            if (typeof window.jspdf === 'undefined') {
+                showToast('PDF library not loaded. Please refresh the page.', 'error');
+                return;
+            }
+
+            const {
+                jsPDF
+            } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Color scheme - Terracotta/Reddish-brown
+            const primaryColor = [184, 84, 80]; // RGB for terracotta
+            const lightGray = [245, 245, 245];
+            const darkGray = [51, 51, 51];
+
+            // Get dealer details
+            const dealerDetails = bill.dealerDetails || {};
+            const companyName = dealerDetails.companyName || 'Svasthyaa E-Commerce';
+            const companyAddress = `${dealerDetails.address || '123 Health Street'}, ${dealerDetails.city || 'Mumbai'}, ${dealerDetails.state || 'Maharashtra'} ${dealerDetails.zipCode || '400001'}`;
+            const companyPhone = dealerDetails.phone || '+91 98765 43210';
+            const companyEmail = dealerDetails.email || 'info@svasthyaa.com';
+            const tagline = 'Your Trusted Health Partner';
+
+            // Top border bar
+            doc.setFillColor(...primaryColor);
+            doc.rect(0, 0, 210, 8, 'F');
+
+            // Header Section
+            let yPos = 20;
+
+            // Company Logo Area (Left)
+            doc.setFillColor(...primaryColor);
+            doc.rect(20, yPos, 15, 15, 'F'); // Logo box
+            doc.setFillColor(255, 255, 255);
+            doc.rect(22, yPos + 2, 11, 11, 'F'); // Inner box
+            doc.setFillColor(...primaryColor);
+            doc.circle(26.5, yPos + 6.5, 2, 'F'); // Dot
+
+            // Company Name
+            doc.setFontSize(24);
+            doc.setFont(undefined, 'bold');
+            doc.setTextColor(...primaryColor);
+            doc.text(companyName.toUpperCase(), 40, yPos + 10);
+
+            // Tagline
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'normal');
+            doc.setTextColor(128, 128, 128);
+            doc.text(tagline.toUpperCase(), 40, yPos + 16);
+
+            // Invoice Title (Right)
+            doc.setFontSize(28);
+            doc.setFont(undefined, 'bold');
+            doc.setTextColor(...primaryColor);
+            doc.text('INVOICE', 150, yPos + 10);
+
+            // Invoice Details (Right)
+            yPos += 25;
+            doc.setFontSize(9);
+            doc.setFont(undefined, 'normal');
+            doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
+            doc.text(`Invoice No : # ${bill.id}`, 150, yPos, { align: 'right' });
+            yPos += 6;
+            const billDate = bill.date ? new Date(bill.date).toLocaleDateString('en-GB') : new Date().toLocaleDateString('en-GB');
+            const dueDate = new Date(new Date(bill.date || Date.now()).getTime() + 14 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB');
+            doc.text(`Date : ${billDate}`, 150, yPos, { align: 'right' });
+            yPos += 6;
+            doc.text(`Due Date : ${dueDate}`, 150, yPos, { align: 'right' });
+            yPos += 6;
+            doc.text(`Account No: # ${bill.orderId}`, 150, yPos, { align: 'right' });
+
+            // Header separator bar
+            yPos += 12;
+            doc.setFillColor(...primaryColor);
+            doc.rect(20, yPos, 170, 6, 'F');
+
+            // Payment Info and Bill To Section
+            yPos += 15;
+
+            // Payment Info (Left)
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'bold');
+            doc.setTextColor(...primaryColor);
+            doc.text('PAYMENT INFO', 20, yPos);
+            yPos += 8;
+            doc.setFontSize(9);
+            doc.setFont(undefined, 'normal');
+            doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
+            doc.text(`Account : #${bill.orderId}`, 20, yPos);
+            yPos += 6;
+            doc.text(`A/c Name : ${companyName}`, 20, yPos);
+            yPos += 6;
+            doc.text(`Bank Details : ${companyName} Bank`, 20, yPos);
+
+            // Bill To (Right)
+            yPos -= 18;
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'bold');
+            doc.setTextColor(...primaryColor);
+            doc.text('BILL TO:', 150, yPos, { align: 'right' });
+            yPos += 8;
+            doc.setFontSize(9);
+            doc.setFont(undefined, 'bold');
+            doc.setTextColor(...primaryColor);
+            doc.text((bill.customerName || 'Customer').toUpperCase(), 150, yPos, { align: 'right' });
+            yPos += 6;
+            doc.setFont(undefined, 'normal');
+            doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
+            if (bill.customerAddress) {
+                const addressLines = doc.splitTextToSize(bill.customerAddress, 60);
+                addressLines.forEach((line, index) => {
+                    doc.text(line, 150, yPos + (index * 5), { align: 'right' });
+                });
+                yPos += addressLines.length * 5;
+            } else {
+                doc.text('Address to be provided', 150, yPos, { align: 'right' });
+                yPos += 5;
+            }
+
+            // Table Header Bar
+            yPos += 10;
+            doc.setFillColor(...primaryColor);
+            doc.rect(20, yPos, 170, 8, 'F');
+
+            // Table Headers (White text on colored background)
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(9);
+            doc.setFont(undefined, 'bold');
+            doc.text('NO', 25, yPos + 6);
+            doc.text('PRODUCT DESCRIPTION', 50, yPos + 6);
+            doc.text('UNIT PRICE', 130, yPos + 6);
+            doc.text('QTY', 155, yPos + 6);
+            doc.text('TOTAL', 175, yPos + 6);
+
+            // Table Rows
+            yPos += 12;
+            doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
+            doc.setFont(undefined, 'normal');
+            
+            if (bill.items && bill.items.length > 0) {
+                bill.items.forEach((item, index) => {
+                    // Alternating row colors
+                    if (index % 2 === 0) {
+                        doc.setFillColor(255, 255, 255);
+                    } else {
+                        doc.setFillColor(250, 250, 250);
+                    }
+                    doc.rect(20, yPos - 4, 170, 8, 'F');
+
+                    // Row content
+                    doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
+                    const itemNo = String(index + 1).padStart(2, '0');
+                    doc.text(itemNo, 25, yPos);
+                    
+                    // Product description (split if too long)
+                    const desc = doc.splitTextToSize(item.name || 'Item', 60);
+                    doc.text(desc[0], 50, yPos);
+                    
+                    doc.text(`₹${(item.price || 0).toFixed(2)}`, 130, yPos);
+                    doc.text((item.quantity || 0).toString(), 155, yPos);
+                    doc.text(`₹${(item.total || 0).toFixed(2)}`, 175, yPos);
+                    
+                    yPos += 8;
+                    
+                    // Check if we need a new page
+                    if (yPos > 270) {
+                        doc.addPage();
+                        yPos = 20;
+                    }
+                });
+            }
+
+            // Totals Section
+            yPos += 5;
+            doc.setFontSize(9);
+            doc.setFont(undefined, 'normal');
+            doc.text('Sub Total', 130, yPos, { align: 'right' });
+            doc.text(`₹${(bill.subtotal || 0).toFixed(2)}`, 190, yPos, { align: 'right' });
+            yPos += 7;
+            doc.text('Tax 5%', 130, yPos, { align: 'right' });
+            doc.text(`₹${(bill.tax || 0).toFixed(2)}`, 190, yPos, { align: 'right' });
+            yPos += 7;
+            doc.text('Delivery', 130, yPos, { align: 'right' });
+            doc.text(`₹${(bill.delivery || bill.shipping || 0).toFixed(2)}`, 190, yPos, { align: 'right' });
+
+            // Grand Total Bar
+            yPos += 5;
+            doc.setFillColor(...primaryColor);
+            doc.rect(130, yPos - 4, 60, 10, 'F');
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'bold');
+            doc.setTextColor(255, 255, 255);
+            doc.text('Grand Total', 135, yPos + 4);
+            doc.text(`₹${(bill.total || 0).toFixed(2)}`, 190, yPos + 4, { align: 'right' });
+
+            // Thank You and Terms Section
+            yPos += 15;
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'bold');
+            doc.setTextColor(...primaryColor);
+            doc.text('THANK YOU FOR YOUR BUSINESS', 20, yPos);
+            yPos += 8;
+            doc.text('TERMS & CONDITION', 20, yPos);
+            yPos += 6;
+            doc.setFontSize(8);
+            doc.setFont(undefined, 'normal');
+            doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
+            doc.text('Payment is due within 14 days. Please make payment by the due date to avoid late fees.', 20, yPos, { maxWidth: 80 });
+
+            // Signature Line
+            yPos -= 14;
+            doc.setFontSize(9);
+            doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
+            doc.text('Signature', 150, yPos, { align: 'right' });
+            doc.line(150, yPos + 2, 190, yPos + 2);
+
+            // Bottom border bar
+            const pageHeight = doc.internal.pageSize.height;
+            doc.setFillColor(...primaryColor);
+            doc.rect(0, pageHeight - 15, 210, 15, 'F');
+            // Create diagonal cut effect
+            doc.setFillColor(255, 255, 255);
+            const trianglePoints = [[0, pageHeight - 15], [30, pageHeight - 15], [0, pageHeight - 5]];
+            doc.triangle(trianglePoints[0][0], trianglePoints[0][1], trianglePoints[1][0], trianglePoints[1][1], trianglePoints[2][0], trianglePoints[2][1], 'F');
+
+            // Footer Contact Info
+            doc.setFontSize(8);
+            doc.setFont(undefined, 'normal');
+            doc.setTextColor(255, 255, 255);
+            const footerY = pageHeight - 8;
+            doc.text(`@ ${companyEmail}`, 30, footerY);
+            doc.text(`www.svasthyaa.com`, 105, footerY);
+            doc.text(`${companyAddress}`, 160, footerY, { align: 'right' });
+
+            // Generate safe filename
+            const safeBillId = (bill.id || 'bill').replace(/[^a-zA-Z0-9-_]/g, '_');
+            const filename = `bill-${safeBillId}.pdf`;
+
+            // Save the PDF
+            try {
+                doc.save(filename);
+                showToast(`Bill ${bill.id} downloaded successfully!`, 'success');
+            } catch (error) {
+                console.error('Error saving PDF:', error);
+                showToast('Failed to download PDF. Please try again.', 'error');
+            }
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `
+                <div class="toast-content">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#17a2b8'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-weight: 500;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+            `;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.transform = 'translateX(0)';
+            }, 10);
+
+            setTimeout(() => {
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>

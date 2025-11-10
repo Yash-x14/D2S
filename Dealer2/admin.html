@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Dealer Management</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="dealer-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .admin-page {
+            background: #f8f9fa;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .admin-header {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .admin-title {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .admin-subtitle {
+            color: #666;
+            margin-bottom: 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .dealers-table {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .table-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+        
+        .filter-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn-approve {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        
+        .btn-reject {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        
+        .btn-view {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        
+        .btn-approve:hover,
+        .btn-reject:hover,
+        .btn-view:hover {
+            opacity: 0.8;
+        }
+        
+        .dealer-details {
+            background: #f8f9fa;
+            border-radius: 5px;
+            padding: 1rem;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .dealer-details.show {
+            display: block;
+        }
+        
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .detail-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .detail-value {
+            color: #666;
+        }
+        
+        .no-dealers {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+        
+        .no-dealers i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #ddd;
+        }
+    </style>
+</head>
+
+<body class="admin-page">
+    <div class="admin-header">
+        <h1 class="admin-title">Dealer Management</h1>
+        <p class="admin-subtitle">Manage dealer registrations and approvals</p>
+    </div>
+
+    <!-- Statistics -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number" id="totalDealers">0</div>
+            <div class="stat-label">Total Dealers</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="pendingDealers">0</div>
+            <div class="stat-label">Pending Approval</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="approvedDealers">0</div>
+            <div class="stat-label">Approved</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="rejectedDealers">0</div>
+            <div class="stat-label">Rejected</div>
+        </div>
+    </div>
+
+    <!-- Dealers Table -->
+    <div class="dealers-table">
+        <div class="table-header">
+            <h2 class="table-title">Dealer Applications</h2>
+            <div class="filter-controls">
+                <select class="form-select" id="statusFilter">
+                    <option value="">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+                <button class="btn btn-primary" onclick="loadDealers()">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Business Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Business Type</th>
+                        <th>Status</th>
+                        <th>Applied Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="dealersTableBody">
+                    <!-- Dealers will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="no-dealers" id="noDealers" style="display: none;">
+            <i class="fas fa-users"></i>
+            <h3>No dealer applications found</h3>
+            <p>No dealer applications match your current filter criteria.</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let dealers = [];
+
+        // Load dealers from localStorage
+        function loadDealers() {
+            dealers = JSON.parse(localStorage.getItem('dealers') || '[]');
+            updateStats();
+            renderDealersTable();
+        }
+
+        // Update statistics
+        function updateStats() {
+            const total = dealers.length;
+            const pending = dealers.filter(d => d.status === 'pending').length;
+            const approved = dealers.filter(d => d.status === 'approved').length;
+            const rejected = dealers.filter(d => d.status === 'rejected').length;
+
+            document.getElementById('totalDealers').textContent = total;
+            document.getElementById('pendingDealers').textContent = pending;
+            document.getElementById('approvedDealers').textContent = approved;
+            document.getElementById('rejectedDealers').textContent = rejected;
+        }
+
+        // Render dealers table
+        function renderDealersTable() {
+            const tbody = document.getElementById('dealersTableBody');
+            const noDealers = document.getElementById('noDealers');
+            const statusFilter = document.getElementById('statusFilter').value;
+
+            let filteredDealers = dealers;
+            if (statusFilter) {
+                filteredDealers = dealers.filter(d => d.status === statusFilter);
+            }
+
+            if (filteredDealers.length === 0) {
+                tbody.innerHTML = '';
+                noDealers.style.display = 'block';
+                return;
+            }
+
+            noDealers.style.display = 'none';
+            tbody.innerHTML = filteredDealers.map(dealer => `
+                <tr>
+                    <td>${dealer.id}</td>
+                    <td>${dealer.fullName}</td>
+                    <td>${dealer.businessName}</td>
+                    <td>${dealer.email}</td>
+                    <td>${dealer.phone}</td>
+                    <td>${dealer.businessType}</td>
+                    <td><span class="status-badge status-${dealer.status}">${dealer.status}</span></td>
+                    <td>${formatDate(dealer.createdAt)}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-view" onclick="viewDealer('${dealer.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            ${dealer.status === 'pending' ? `
+                                <button class="btn-approve" onclick="approveDealer('${dealer.id}')">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="btn-reject" onclick="rejectDealer('${dealer.id}')">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            ` : ''}
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        // View dealer details
+        function viewDealer(dealerId) {
+            const dealer = dealers.find(d => d.id === dealerId);
+            if (!dealer) return;
+            
+            const detailsHtml = `
+                <div class="dealer-details show" id="details-${dealerId}">
+                    <h4>Dealer Details</h4>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <div class="detail-label">Full Name</div>
+                            <div class="detail-value">${dealer.fullName}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Email</div>
+                            <div class="detail-value">${dealer.email}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Phone</div>
+                            <div class="detail-value">${dealer.phone}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Business Name</div>
+                            <div class="detail-value">${dealer.businessName}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Business Type</div>
+                            <div class="detail-value">${dealer.businessType}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">GST Number</div>
+                            <div class="detail-value">${dealer.gstNumber || 'Not provided'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">PAN Number</div>
+                            <div class="detail-value">${dealer.panNumber || 'Not provided'}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Address</div>
+                            <div class="detail-value">${dealer.address}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">City</div>
+                            <div class="detail-value">${dealer.city}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">State</div>
+                            <div class="detail-value">${dealer.state}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Pincode</div>
+                            <div class="detail-value">${dealer.pincode}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Country</div>
+                            <div class="detail-value">${dealer.country}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Marketing Opt-in</div>
+                            <div class="detail-value">${dealer.marketing ? 'Yes' : 'No'}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Remove existing details
+            document.querySelectorAll('.dealer-details').forEach(detail => detail.remove());
+            
+            // Add new details after the row
+            const row = document.querySelector(`tr:has(td:contains("${dealerId}"))`);
+            if (row) {
+                row.insertAdjacentHTML('afterend', detailsHtml);
+            }
+        }
+        
+        // Approve dealer
+        function approveDealer(dealerId) {
+            if (confirm('Are you sure you want to approve this dealer?')) {
+                const dealer = dealers.find(d => d.id === dealerId);
+                if (dealer) {
+                    dealer.status = 'approved';
+                    dealer.approved = true;
+                    dealer.approvedAt = new Date().toISOString();
+                    
+                    // Update localStorage
+                    localStorage.setItem('dealers', JSON.stringify(dealers));
+                    
+                    // Refresh display
+                    loadDealers();
+                    
+                    alert('Dealer approved successfully!');
+                }
+            }
+        }
+        
+        // Reject dealer
+        function rejectDealer(dealerId) {
+            if (confirm('Are you sure you want to reject this dealer?')) {
+                const dealer = dealers.find(d => d.id === dealerId);
+                if (dealer) {
+                    dealer.status = 'rejected';
+                    dealer.approved = false;
+                    dealer.rejectedAt = new Date().toISOString();
+                    
+                    // Update localStorage
+                    localStorage.setItem('dealers', JSON.stringify(dealers));
+                    
+                    // Refresh display
+                    loadDealers();
+                    
+                    alert('Dealer rejected successfully!');
+                }
+            }
+        }
+        
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-IN', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+        
+        // Filter change handler
+        document.getElementById('statusFilter').addEventListener('change', renderDealersTable);
+        
+        // Load dealers on page load
+        document.addEventListener('DOMContentLoaded', loadDealers);
+    </script>
+</body>
+
+</html>

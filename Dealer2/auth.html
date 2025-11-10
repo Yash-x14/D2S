@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up / Sign In - Dealer2 Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(180deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Animated Background Elements */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .glow-sphere {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .sphere-1 {
+            width: 400px;
+            height: 400px;
+            background: #8b5cf6;
+            top: -100px;
+            left: -100px;
+        }
+
+        .sphere-2 {
+            width: 300px;
+            height: 300px;
+            background: #a855f7;
+            bottom: -50px;
+            right: -50px;
+            animation-delay: -5s;
+        }
+
+        .sphere-3 {
+            width: 250px;
+            height: 250px;
+            background: #7c3aed;
+            top: 50%;
+            left: 10%;
+            animation-delay: -10s;
+        }
+
+        .sphere-4 {
+            width: 350px;
+            height: 350px;
+            background: #9333ea;
+            bottom: 20%;
+            left: 60%;
+            animation-delay: -15s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+        }
+
+        /* Main Container */
+        .auth-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .auth-card {
+            background: rgba(30, 27, 75, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .auth-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .auth-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        /* Social Login Buttons */
+        .social-login {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+            justify-content: center;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+
+        .social-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(139, 92, 246, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .social-btn i {
+            font-size: 18px;
+        }
+
+        .social-btn.google i {
+            background: linear-gradient(45deg, #4285F4, #34A853, #FBBC05, #EA4335);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Form Fields */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 16px;
+        }
+
+        .input-icon .form-input {
+            padding-left: 44px;
+        }
+
+        /* Role Selector */
+        .role-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px;
+            border-radius: 12px;
+        }
+
+        .role-btn {
+            flex: 1;
+            padding: 10px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .role-btn.active {
+            background: rgba(139, 92, 246, 0.3);
+            color: white;
+        }
+
+        /* Terms Checkbox */
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 24px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .terms-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: #8b5cf6;
+        }
+
+        .terms-checkbox label {
+            cursor: pointer;
+            line-height: 1.5;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.6);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Switch Link */
+        .switch-link {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .switch-link a {
+            color: #8b5cf6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .switch-link a:hover {
+            color: #a78bfa;
+        }
+
+        /* Error Message */
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #86efac;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        /* Hide/Show Forms */
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Elements -->
+    <div class="stars" id="stars"></div>
+    <div class="glow-sphere sphere-1"></div>
+    <div class="glow-sphere sphere-2"></div>
+    <div class="glow-sphere sphere-3"></div>
+    <div class="glow-sphere sphere-4"></div>
+
+    <!-- Main Container -->
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Sign Up Form -->
+            <div class="auth-form active" id="signup-form">
+                <h1 class="auth-title">Sign Up</h1>
+                <p class="auth-subtitle">Sign in with</p>
+
+                <div class="social-login">
+                    <button class="social-btn google" onclick="handleSocialLogin('google')">
+                        <i class="fab fa-google"></i>
+                        <span>GOOGLE</span>
+                    </button>
+                </div>
+
+                <div class="error-message" id="signup-error"></div>
+                <div class="success-message" id="signup-success"></div>
+
+                <form id="signup-form-element" onsubmit="handleSignup(event)">
+                    <!-- Role Selector -->
+                    <div class="role-selector">
+                        <button type="button" class="role-btn active" data-role="customer" onclick="selectRole('customer')">
+                            Customer
+                        </button>
+                        <button type="button" class="role-btn" data-role="dealer" onclick="selectRole('dealer')">
+                            Dealer
+                        </button>
+                    </div>
+
+                    <input type="hidden" id="signup-role" name="role" value="customer">
+
+                    <div class="form-group">
+                        <label class="form-label" for="signup-name" id="signup-name-label">Name</label>
+                        <input type="text" class="form-input" id="signup-name" name="name" placeholder="Your Name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="signup-email">Email</label>
+                        <div class="input-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" class="form-input" id="signup-email" name="email" placeholder="Email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="signup-password">Password</label>
+                        <div class="input-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" class="form-input" id="signup-password" name="password" placeholder="Password" required minlength="6">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="terms-checkbox">
+                            <input type="checkbox" id="signup-terms" name="terms" required>
+                            <label for="signup-terms">I have read the privacy and terms and conditions</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="signup-submit-btn">
+                        Create Account
+                    </button>
+                </form>
+
+                <div class="switch-link">
+                    Already registered? <a href="#" onclick="switchToSignin()">Sign in</a>
+                </div>
+            </div>
+
+            <!-- Sign In Form -->
+            <div class="auth-form" id="signin-form">
+                <h1 class="auth-title">Sign In</h1>
+                <p class="auth-subtitle">Welcome back</p>
+
+                <div class="social-login">
+                    <button class="social-btn google" onclick="handleSocialLogin('google')">
+                        <i class="fab fa-google"></i>
+                        <span>GOOGLE</span>
+                    </button>
+                </div>
+
+                <div class="error-message" id="signin-error"></div>
+                <div class="success-message" id="signin-success"></div>
+
+                <form id="signin-form-element" onsubmit="handleSignin(event)">
+                    <!-- Role Selector -->
+                    <div class="role-selector">
+                        <button type="button" class="role-btn active" data-role="customer" onclick="selectRole('customer', 'signin')">
+                            Customer
+                        </button>
+                        <button type="button" class="role-btn" data-role="dealer" onclick="selectRole('dealer', 'signin')">
+                            Dealer
+                        </button>
+                    </div>
+
+                    <input type="hidden" id="signin-role" name="role" value="customer">
+
+                    <div class="form-group">
+                        <label class="form-label" for="signin-email">Email</label>
+                        <div class="input-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" class="form-input" id="signin-email" name="email" placeholder="Email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="signin-password">Password</label>
+                        <div class="input-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" class="form-input" id="signin-password" name="password" placeholder="Password" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="signin-submit-btn">
+                        Sign In
+                    </button>
+                </form>
+
+                <div class="switch-link">
+                    Not registered? <a href="#" onclick="switchToSignup()">Sign up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../frontend/auth.js"></script>
+    <script>
+        // Override redirect URLs for Dealer2 - redirect to /dealer2 instead of /dealer
+        (function() {
+            // Store original functions
+            const originalHandleSignup = window.handleSignup;
+            const originalHandleSignin = window.handleSignin;
+
+            // Override handleSignup
+            if (originalHandleSignup) {
+                window.handleSignup = async function(event) {
+                    event.preventDefault();
+                    clearMessages();
+
+                    const form = event.target;
+                    const submitBtn = document.getElementById('signup-submit-btn');
+                    const originalText = submitBtn.textContent;
+
+                    const selectedRole = document.getElementById('signup-role').value;
+                    const nameValue = document.getElementById('signup-name').value.trim();
+                    const formData = {
+                        name: nameValue,
+                        email: document.getElementById('signup-email').value.trim(),
+                        password: document.getElementById('signup-password').value,
+                        role: selectedRole
+                    };
+
+                    if (selectedRole === 'dealer') {
+                        formData.companyName = nameValue;
+                        delete formData.name;
+                    }
+
+                    if (!nameValue || !formData.email || !formData.password) {
+                        showError('signup', 'Please fill in all fields');
+                        return;
+                    }
+
+                    if (formData.password.length < 6) {
+                        showError('signup', 'Password must be at least 6 characters');
+                        return;
+                    }
+
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(formData.email)) {
+                        showError('signup', 'Please enter a valid email address');
+                        return;
+                    }
+
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Creating Account...';
+
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/api/signup`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(formData)
+                        });
+
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                            throw new Error(data.error || 'Registration failed');
+                        }
+
+                        const responseData = data.data || data;
+                        const accountRole = responseData.role || selectedRole;
+
+                        showSuccess('signup', `✅ Account created successfully! Redirecting to Dealer2 Dashboard...`);
+
+                        localStorage.setItem('token', responseData.token || data.token);
+                        localStorage.setItem('role', accountRole);
+                        localStorage.setItem('userId', responseData.userId || data.userId);
+
+                        setTimeout(() => {
+                            if (accountRole === 'dealer') {
+                                window.location.href = '/dealer2';
+                            } else if (accountRole === 'customer') {
+                                window.location.href = '/index.html';
+                            } else {
+                                window.location.href = '/index.html';
+                            }
+                        }, 1500);
+
+                    } catch (error) {
+                        console.error('Signup error:', error);
+                        showError('signup', error.message || 'Failed to create account. Please try again.');
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                    }
+                };
+            }
+
+            // Override handleSignin
+            if (originalHandleSignin) {
+                window.handleSignin = async function(event) {
+                    event.preventDefault();
+                    clearMessages();
+
+                    const form = event.target;
+                    const submitBtn = document.getElementById('signin-submit-btn');
+                    const originalText = submitBtn.textContent;
+
+                    const selectedRole = document.getElementById('signin-role').value;
+                    const formData = {
+                        email: document.getElementById('signin-email').value.trim(),
+                        password: document.getElementById('signin-password').value,
+                        role: selectedRole
+                    };
+
+                    if (!formData.email || !formData.password) {
+                        showError('signin', 'Please fill in all fields');
+                        return;
+                    }
+
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(formData.email)) {
+                        showError('signin', 'Please enter a valid email address');
+                        return;
+                    }
+
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Signing In...';
+
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/api/login`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(formData)
+                        });
+
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                            throw new Error(data.error || 'Login failed');
+                        }
+
+                        const responseData = data.data || data;
+                        const accountRole = responseData.role || data.role;
+
+                        showSuccess('signin', `✅ Login successful! Redirecting to Dealer2 Dashboard...`);
+
+                        localStorage.setItem('token', responseData.token || data.token);
+                        localStorage.setItem('role', accountRole);
+                        localStorage.setItem('userId', responseData.userId || data.userId || '');
+
+                        setTimeout(() => {
+                            if (accountRole === 'dealer') {
+                                window.location.href = '/dealer2';
+                            } else if (accountRole === 'customer') {
+                                window.location.href = '/index.html';
+                            } else {
+                                window.location.href = '/index.html';
+                            }
+                        }, 1500);
+
+                    } catch (error) {
+                        console.error('Signin error:', error);
+                        showError('signin', error.message || 'Invalid credentials. Please try again.');
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                    }
+                };
+            }
+
+            // Initialize on page load
+            document.addEventListener('DOMContentLoaded', () => {
+                generateStars();
+
+                // Check URL parameter for pre-selected role
+                const urlParams = new URLSearchParams(window.location.search);
+                const preSelectedRole = urlParams.get('role');
+
+                if (preSelectedRole === 'dealer') {
+                    // Auto-select dealer role if URL parameter is present
+                    if (typeof selectRole === 'function') {
+                        selectRole('dealer', 'signup');
+                        selectRole('dealer', 'signin');
+                    }
+                } else {
+                    // Default to customer role
+                    if (typeof selectRole === 'function') {
+                        selectRole('customer', 'signup');
+                        selectRole('customer', 'signin');
+                    }
+                }
+            });
+        })();
+    </script>
+</body>
+
+</html>

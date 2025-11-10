@@ -1,0 +1,55 @@
+# =======================================
+# Global Git Ignore for D2S Fullstack Project
+# (Backend + Customer + Dealer2 Frontends)
+# =======================================
+
+# Node modules
+node_modules
+backend/node_modules
+customer/node_modules
+Dealer2/node_modules
+
+# Build / dist folders
+build
+dist
+backend/build
+backend/dist
+customer/build
+customer/dist
+Dealer2/build
+Dealer2/dist
+
+# Environment & secrets
+.env
+backend/.env
+customer/.env
+Dealer2/.env
+*.local
+
+# Logs & temp files
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.tmp
+temp
+
+# System & OS files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.swp
+
+# =======================================
+# Notes:
+# - Do not modify any existing code.
+# - This .gitignore ensures all node_modules, builds, and .env files stay local.
+# - Works for backend, customer, and Dealer2 folders.
+# - Keep all current project behavior unchanged.
+# =======================================
+

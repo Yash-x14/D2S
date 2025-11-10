@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dealer Login - Svasthyaa E-Commerce</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="dealer-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .dealer-login-page {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .login-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            min-height: 500px;
+        }
+        
+        .login-left {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem;
+            color: white;
+            text-align: center;
+        }
+        
+        .login-right {
+            flex: 1;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+        
+        .login-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .login-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .login-features {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .login-features li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .login-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 2rem;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .login-footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #666;
+        }
+        
+        .login-footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+            }
+            .login-left {
+                padding: 2rem;
+            }
+            .login-right {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="dealer-login-page">
+    <div class="login-container">
+        <div class="login-left">
+            <img src="../img/Amul.png" alt="Svasthyaa Logo" class="login-logo">
+            <h1 class="login-title">Dealer Portal</h1>
+            <p class="login-subtitle">Manage your orders and grow your business</p>
+            <ul class="login-features">
+                <li><i class="fas fa-check"></i> Real-time order management</li>
+                <li><i class="fas fa-check"></i> Advanced analytics & reports</li>
+                <li><i class="fas fa-check"></i> Customer relationship tools</li>
+                <li><i class="fas fa-check"></i> Inventory management</li>
+            </ul>
+        </div>
+        <div class="login-right">
+            <h2 class="mb-4">Welcome Back</h2>
+            <p class="text-muted mb-4">Sign in to your dealer account</p>
+
+            <form id="dealerLoginForm">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                </div>
+
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">
+                        Remember me
+                    </label>
+                </div>
+
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt me-2"></i>
+                    Sign In
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <p>Don't have an account? <a href="register.html">Create Dealer Account</a></p>
+                <p><a href="#forgot">Forgot Password?</a></p>
+                <p><a href="../index.html">Back to Home</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('dealerLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Simple validation
+            if (!email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            // Simulate login process
+            const loginBtn = document.querySelector('.login-btn');
+            const originalText = loginBtn.innerHTML;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Signing In...';
+            loginBtn.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                // Check if dealer exists in localStorage
+                const dealers = JSON.parse(localStorage.getItem('dealers') || '[]');
+                const dealer = dealers.find(d => d.email === email);
+
+                if (dealer) {
+                    // Check if account is approved
+                    if (!dealer.approved) {
+                        alert('Your dealer account is pending approval. Please contact admin or wait for approval email.');
+                        loginBtn.innerHTML = originalText;
+                        loginBtn.disabled = false;
+                        return;
+                    }
+
+                    // Check password (in real app, this would be hashed)
+                    if (dealer.password === password) {
+                        // Store login state
+                        localStorage.setItem('dealerLoggedIn', 'true');
+                        localStorage.setItem('dealerEmail', email);
+                        localStorage.setItem('dealerData', JSON.stringify(dealer));
+
+                        // Redirect to dashboard
+                        window.location.href = 'index1.html';
+                    } else {
+                        alert('Invalid password');
+                        loginBtn.innerHTML = originalText;
+                        loginBtn.disabled = false;
+                    }
+                } else {
+                    // For demo purposes, accept any email/password for existing dealers
+                    if (email && password) {
+                        // Store login state
+                        localStorage.setItem('dealerLoggedIn', 'true');
+                        localStorage.setItem('dealerEmail', email);
+
+                        // Redirect to dashboard
+                        window.location.href = 'index1.html';
+                    } else {
+                        alert('Invalid credentials');
+                        loginBtn.innerHTML = originalText;
+                        loginBtn.disabled = false;
+                    }
+                }
+            }, 1500);
+        });
+
+        // Check if already logged in
+        if (localStorage.getItem('dealerLoggedIn') === 'true') {
+            window.location.href = 'index1.html';
+        }
+    </script>
+</body>
+
+</html>

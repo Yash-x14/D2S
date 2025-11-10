@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History - Svasthyaa E-Commerce</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img src="logo.png" alt="Svasthyaa Logo" class="website-logo">
+        </div>
+        <div class="navbar-right">
+            <button class="search-btn"><i class="fas fa-search"></i></button>
+            <a href="index.html" class="nav-btn">Home</a>
+            <a href="variety.html" class="nav-btn">All Products</a>
+            <a href="blog.html" class="nav-btn">Blog</a>
+            <a href="contact.html" class="nav-btn">Contact</a>
+            <a href="cart.html" class="nav-btn cart-btn"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+            <a href="/auth" class="nav-btn"><i class="fas fa-user"></i> Customer Login</a>
+        </div>
+    </nav>
+
+    <!-- Order History Section -->
+    <section class="order-history-section">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">
+                    <i class="fas fa-history"></i> Order History
+                </h1>
+                <p class="page-subtitle">Track and manage your past orders</p>
+            </div>
+
+            <!-- Filter and Search Bar -->
+            <div class="order-filters">
+                <div class="filter-group">
+                    <label for="status-filter">Filter by Status:</label>
+                    <select id="status-filter" class="filter-select">
+                        <option value="all">All Orders</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="processing">Processing</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="date-filter">Filter by Date:</label>
+                    <select id="date-filter" class="filter-select">
+                        <option value="all">All Time</option>
+                        <option value="last-month">Last Month</option>
+                        <option value="last-3-months">Last 3 Months</option>
+                        <option value="last-6-months">Last 6 Months</option>
+                        <option value="last-year">Last Year</option>
+                    </select>
+                </div>
+                <div class="search-group">
+                    <input type="text" id="order-search" placeholder="Search by order ID or product..." class="search-input">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+
+            <!-- Order Statistics -->
+            <div class="order-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="total-orders">12</div>
+                        <div class="stat-label">Total Orders</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="delivered-orders">10</div>
+                        <div class="stat-label">Delivered</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="shipped-orders">1</div>
+                        <div class="stat-label">Shipped</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-rupee-sign"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="total-spent">₹25,450</div>
+                        <div class="stat-label">Total Spent</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders List -->
+            <div class="orders-container">
+                <!-- Order Item 1 -->
+                <div class="order-item" data-status="delivered" data-date="2024-01-15">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <h3 class="order-id">Order #ORD-2024-001</h3>
+                            <p class="order-date">
+                                <i class="fas fa-calendar"></i> Placed on January 15, 2024
+                            </p>
+                        </div>
+                        <div class="order-status delivered">
+                            <i class="fas fa-check-circle"></i> Delivered
+                        </div>
+                    </div>
+
+                    <div class="order-details">
+                        <div class="order-products">
+                            <h4>Products Ordered:</h4>
+                            <div class="product-list">
+                                <div class="product-item">
+                                    <img src="img/products/amul-milk-1l.jpg" alt="Amul Milk 1L" class="product-image">
+                                    <div class="product-info">
+                                        <h5>Amul Fresh Milk 1L</h5>
+                                        <p class="product-category">Dairy Products</p>
+                                        <p class="product-quantity">Quantity: 2</p>
+                                        <p class="product-price">₹120.00</p>
+                                    </div>
+                                </div>
+                                <div class="product-item">
+                                    <img src="img/products/amul-butter-100g.jpg" alt="Amul Butter 100g" class="product-image">
+                                    <div class="product-info">
+                                        <h5>Amul Butter 100g</h5>
+                                        <p class="product-category">Dairy Products</p>
+                                        <p class="product-quantity">Quantity: 1</p>
+                                        <p class="product-price">₹50.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="order-summary">
+                            <div class="summary-row">
+                                <span>Subtotal:</span>
+                                <span>₹290.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Delivery Charges:</span>
+                                <span>₹30.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Tax (GST):</span>
+                                <span>₹25.60</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total Amount:</span>
+                                <span>₹345.60</span>
+                            </div>
+                            <div class="payment-info">
+                                <p><i class="fas fa-credit-card"></i> Payment Mode: Credit Card</p>
+                                <p><i class="fas fa-calendar-check"></i> Delivered on January 17, 2024</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-actions">
+                        <button class="btn-secondary" onclick="reorderItems('ORD-2024-001')">
+                            <i class="fas fa-redo"></i>
+                            Reorder
+                        </button>
+                        <button class="btn-primary" onclick="viewOrderDetails('ORD-2024-001')">
+                            <i class="fas fa-eye"></i>
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Order Item 2 -->
+                <div class="order-item" data-status="shipped" data-date="2024-01-20">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <h3 class="order-id">Order #ORD-2024-002</h3>
+                            <p class="order-date">
+                                <i class="fas fa-calendar"></i> Placed on January 20, 2024
+                            </p>
+                        </div>
+                        <div class="order-status shipped">
+                            <i class="fas fa-truck"></i> Shipped
+                        </div>
+                    </div>
+
+                    <div class="order-details">
+                        <div class="order-products">
+                            <h4>Products Ordered:</h4>
+                            <div class="product-list">
+                                <div class="product-item">
+                                    <img src="img/products/amul-cheese-200g.jpg" alt="Amul Cheese 200g" class="product-image">
+                                    <div class="product-info">
+                                        <h5>Amul Processed Cheese 200g</h5>
+                                        <p class="product-category">Dairy Products</p>
+                                        <p class="product-quantity">Quantity: 3</p>
+                                        <p class="product-price">₹180.00</p>
+                                    </div>
+                                </div>
+                                <div class="product-item">
+                                    <img src="img/products/amul-yogurt-500g.jpg" alt="Amul Yogurt 500g" class="product-image">
+                                    <div class="product-info">
+                                        <h5>Amul Masti Dahi 500g</h5>
+                                        <p class="product-category">Dairy Products</p>
+                                        <p class="product-quantity">Quantity: 2</p>
+                                        <p class="product-price">₹80.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="order-summary">
+                            <div class="summary-row">
+                                <span>Subtotal:</span>
+                                <span>₹700.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Delivery Charges:</span>
+                                <span>₹30.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Tax (GST):</span>
+                                <span>₹65.60</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total Amount:</span>
+                                <span>₹795.60</span>
+                            </div>
+                            <div class="payment-info">
+                                <p><i class="fas fa-mobile-alt"></i> Payment Mode: UPI</p>
+                                <p><i class="fas fa-truck"></i> Expected Delivery: January 22, 2024</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-actions">
+                        <button class="btn-secondary" onclick="trackOrder('ORD-2024-002')">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Track Order
+                        </button>
+                        <button class="btn-primary" onclick="viewOrderDetails('ORD-2024-002')">
+                            <i class="fas fa-eye"></i>
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Order Item 3 -->
+                <div class="order-item" data-status="processing" data-date="2024-01-25">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <h3 class="order-id">Order #ORD-2024-003</h3>
+                            <p class="order-date">
+                                <i class="fas fa-calendar"></i> Placed on January 25, 2024
+                            </p>
+                        </div>
+                        <div class="order-status processing">
+                            <i class="fas fa-clock"></i> Processing
+                        </div>
+                    </div>
+
+                    <div class="order-details">
+                        <div class="order-products">
+                            <h4>Products Ordered:</h4>
+                            <div class="product-list">
+                                <div class="product-item">
+                                    <img src="img/products/amul-ghee-500g.jpg" alt="Amul Ghee 500g" class="product-image">
+                                    <div class="product-info">
+                                        <h5>Amul Pure Ghee 500g</h5>
+                                        <p class="product-category">Dairy Products</p>
+                                        <p class="product-quantity">Quantity: 1</p>
+                                        <p class="product-price">₹280.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="order-summary">
+                            <div class="summary-row">
+                                <span>Subtotal:</span>
+                                <span>₹280.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Delivery Charges:</span>
+                                <span>₹30.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Tax (GST):</span>
+                                <span>₹27.90</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total Amount:</span>
+                                <span>₹337.90</span>
+                            </div>
+                            <div class="payment-info">
+                                <p><i class="fas fa-wallet"></i> Payment Mode: Wallet</p>
+                                <p><i class="fas fa-clock"></i> Processing - Will be shipped soon</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-actions">
+                        <button class="btn-danger" onclick="cancelOrder('ORD-2024-003')">
+                            <i class="fas fa-times"></i>
+                            Cancel Order
+                        </button>
+                        <button class="btn-primary" onclick="viewOrderDetails('ORD-2024-003')">
+                            <i class="fas fa-eye"></i>
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more-container">
+                <button class="btn-secondary load-more-btn" onclick="loadMoreOrders()">
+                    <i class="fas fa-plus"></i>
+                    Load More Orders
+                </button>
+            </div>
+
+            <!-- Clear History Button -->
+            <div class="clear-history-container">
+                <button class="btn-danger clear-history-btn" onclick="clearAllOrderHistory()">
+                    <i class="fas fa-trash-alt"></i>
+                    Clear All Order History
+                </button>
+                <p class="clear-warning">⚠️ This action cannot be undone. All order history will be permanently deleted.</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    <script src="utils.js"></script>
+    <script src="order-history.js"></script>
+    <script>
+        // Order History Integration Script
+        document.addEventListener('DOMContentLoaded', function() {
+            loadOrderHistory();
+        });
+
+        function loadOrderHistory() {
+            const orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
+            const ordersContainer = document.querySelector('.orders-container');
+
+            if (!ordersContainer) return;
+
+            if (orderHistory.length === 0) {
+                ordersContainer.innerHTML = `
+                    <div class="no-orders">
+                        <i class="fas fa-shopping-bag" style="font-size: 48px; color: #ccc; margin-bottom: 20px;"></i>
+                        <h3>No orders found</h3>
+                        <p>You haven't placed any orders yet.</p>
+                        <a href="index.html" class="btn-primary">Start Shopping</a>
+                    </div>
+                `;
+                updateOrderStats([]);
+                return;
+            }
+
+            // Render orders
+            ordersContainer.innerHTML = '';
+            orderHistory.forEach(order => {
+                const orderElement = createOrderElement(order);
+                ordersContainer.innerHTML += orderElement;
+            });
+
+            updateOrderStats(orderHistory);
+        }
+
+        function createOrderElement(order) {
+            const orderDate = new Date(order.date);
+            const statusClass = order.status === 'confirmed' ? 'processing' : order.status;
+
+            return `
+                <div class="order-item" data-status="${statusClass}" data-date="${order.date}">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <h3 class="order-id">Order #${order.id}</h3>
+                            <p class="order-date">
+                                <i class="fas fa-calendar"></i>
+                                Placed on ${orderDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                            </p>
+                        </div>
+                        <div class="order-status ${statusClass}">
+                            <i class="fas fa-${statusClass === 'delivered' ? 'check-circle' : statusClass === 'shipped' ? 'truck' : 'clock'}"></i>
+                            ${statusClass.charAt(0).toUpperCase() + statusClass.slice(1)}
+                        </div>
+                    </div>
+
+                    <div class="order-details">
+                        <div class="order-products">
+                            <h4>Products Ordered:</h4>
+                            <div class="product-list">
+                                ${order.items.map(item => `
+                                    <div class="product-item">
+                                        <img src="${item.image}" alt="${item.name}" class="product-image">
+                                        <div class="product-info">
+                                            <h5>${item.name}</h5>
+                                            <p class="product-category">${item.category || 'General'}</p>
+                                            <p class="product-quantity">Quantity: ${item.quantity}</p>
+                                            <p class="product-price">₹${item.price.toFixed(2)}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <div class="order-summary">
+                            <div class="summary-row">
+                                <span>Subtotal:</span>
+                                <span>₹${order.totals.subtotal.toFixed(2)}</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Delivery Charges:</span>
+                                <span>₹${order.totals.shipping.toFixed(2)}</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Tax (GST):</span>
+                                <span>₹${order.totals.tax.toFixed(2)}</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total Amount:</span>
+                                <span>₹${order.totals.total.toFixed(2)}</span>
+                            </div>
+                            <div class="payment-info">
+                                <p><i class="fas fa-${order.payment.method === 'creditCard' ? 'credit-card' : order.payment.method === 'upi' ? 'mobile-alt' : order.payment.method === 'netBanking' ? 'university' : 'money-bill-wave'}"></i> Payment Mode: ${order.payment.method.charAt(0).toUpperCase() + order.payment.method.slice(1)}</p>
+                                <p><i class="fas fa-user"></i> Customer: ${order.customer.firstName} ${order.customer.lastName}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-actions">
+                        <button class="btn-secondary" onclick="reorderItems('${order.id}')">
+                            <i class="fas fa-redo"></i>
+                            Reorder
+                        </button>
+                        <button class="btn-primary" onclick="viewOrderDetails('${order.id}')">
+                            <i class="fas fa-eye"></i>
+                            View Details
+                        </button>
+                        <button class="btn-secondary" onclick="downloadOrderBill('${order.id}')">
+                            <i class="fas fa-download"></i>
+                            Download Bill
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateOrderStats(orderHistory) {
+            const totalOrders = orderHistory.length;
+            const deliveredOrders = orderHistory.filter(order => order.status === 'delivered').length;
+            const shippedOrders = orderHistory.filter(order => order.status === 'shipped').length;
+            const totalSpent = orderHistory.reduce((total, order) => total + order.totals.total, 0);
+
+            const totalOrdersEl = document.getElementById('total-orders');
+            const deliveredOrdersEl = document.getElementById('delivered-orders');
+            const shippedOrdersEl = document.getElementById('shipped-orders');
+            const totalSpentEl = document.getElementById('total-spent');
+
+            if (totalOrdersEl) totalOrdersEl.textContent = totalOrders;
+            if (deliveredOrdersEl) deliveredOrdersEl.textContent = deliveredOrders;
+            if (shippedOrdersEl) shippedOrdersEl.textContent = shippedOrders;
+            if (totalSpentEl) totalSpentEl.textContent = `₹${totalSpent.toFixed(2)}`;
+        }
+
+        function downloadOrderBill(orderId) {
+            const bills = JSON.parse(localStorage.getItem('bills')) || [];
+            const bill = bills.find(b => b.orderId === orderId);
+
+            if (bill) {
+                // Redirect to download bills page with the specific bill
+                window.location.href = `download-bills.html?bill=${bill.id}`;
+            } else {
+                alert('Bill not found for this order.');
+            }
+        }
+
+        function reorderItems(orderId) {
+            const orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
+            const order = orderHistory.find(o => o.id === orderId);
+
+            if (order) {
+                // Add items back to cart
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                order.items.forEach(item => {
+                    const existingItem = cart.find(cartItem =>
+                        cartItem.name === item.name && cartItem.weight === item.weight
+                    );
+
+                    if (existingItem) {
+                        existingItem.quantity += item.quantity;
+                    } else {
+                        cart.push({
+                            name: item.name,
+                            price: item.price,
+                            quantity: item.quantity,
+                            weight: item.weight,
+                            image: item.image
+                        });
+                    }
+                });
+
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                // Update cart count
+                const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+                const cartCountElements = document.querySelectorAll('.cart-count');
+                cartCountElements.forEach(element => {
+                    element.textContent = cartCount;
+                });
+
+                alert('Items added to cart! Redirecting to cart page...');
+                window.location.href = 'cart.html';
+            }
+        }
+
+        function viewOrderDetails(orderId) {
+            const orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
+            const order = orderHistory.find(o => o.id === orderId);
+
+            if (order) {
+                showOrderSummary(order);
+            } else {
+                alert('Order not found!');
+            }
+        }
+
+        function showOrderSummary(order) {
+            const orderDate = new Date(order.date);
+            const statusClass = order.status === 'confirmed' ? 'processing' : order.status;
+
+            // Calculate total items
+            const totalItems = order.items.reduce((total, item) => total + item.quantity, 0);
+
+            // Create summary content
+            const summaryContent = `
+                <div class="order-summary-popup">
+                    <div class="summary-header">
+                        <h3><i class="fas fa-receipt"></i> Order Summary - ${order.id}</h3>
+                        <button class="close-summary-btn" onclick="closeOrderSummary()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="summary-content">
+                        <div class="summary-status">
+                            <div class="status-badge ${statusClass}">
+                                <i class="fas fa-${statusClass === 'delivered' ? 'check-circle' : statusClass === 'shipped' ? 'truck' : 'clock'}"></i>
+                                ${statusClass.charAt(0).toUpperCase() + statusClass.slice(1)}
+                            </div>
+                            <div class="order-date">
+                                <i class="fas fa-calendar"></i>
+                                ${orderDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                            </div>
+                        </div>
+                        
+                        <div class="summary-items">
+                            <h4><i class="fas fa-shopping-bag"></i> Items (${totalItems})</h4>
+                            <div class="items-list">
+                                ${order.items.map(item => `
+                                    <div class="summary-item">
+                                        <span class="item-name">${item.name}</span>
+                                        <span class="item-quantity">Qty: ${item.quantity}</span>
+                                        <span class="item-price">₹${item.price.toFixed(2)}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="summary-totals">
+                            <div class="total-row">
+                                <span>Subtotal:</span>
+                                <span>₹${order.totals.subtotal.toFixed(2)}</span>
+                            </div>
+                            <div class="total-row">
+                                <span>Delivery:</span>
+                                <span>₹${order.totals.shipping.toFixed(2)}</span>
+                            </div>
+                            <div class="total-row">
+                                <span>Tax:</span>
+                                <span>₹${order.totals.tax.toFixed(2)}</span>
+                            </div>
+                            <div class="total-row final-total">
+                                <span>Total:</span>
+                                <span>₹${order.totals.total.toFixed(2)}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="summary-payment">
+                            <p><i class="fas fa-${order.payment.method === 'creditCard' ? 'credit-card' : order.payment.method === 'upi' ? 'mobile-alt' : order.payment.method === 'netBanking' ? 'university' : 'money-bill-wave'}"></i> 
+                            Payment: ${order.payment.method.charAt(0).toUpperCase() + order.payment.method.slice(1)}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-actions">
+                        <button class="btn-secondary" onclick="closeOrderSummary()">
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                        <button class="btn-primary" onclick="downloadOrderBill('${order.id}')">
+                            <i class="fas fa-download"></i> Download Bill
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Create and show popup
+            const popupOverlay = document.createElement('div');
+            popupOverlay.className = 'summary-overlay';
+            popupOverlay.onclick = closeOrderSummary;
+            popupOverlay.innerHTML = summaryContent;
+
+            document.body.appendChild(popupOverlay);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeOrderSummary() {
+            const popup = document.querySelector('.summary-overlay');
+            if (popup) {
+                popup.remove();
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function showOrderDetailsModal(order) {
+            // Create modal overlay
+            const modalOverlay = document.createElement('div');
+            modalOverlay.className = 'modal-overlay';
+            modalOverlay.onclick = closeOrderDetailsModal;
+
+            // Create modal content
+            const modalContent = document.createElement('div');
+            modalContent.className = 'order-details-modal';
+            modalContent.onclick = (e) => e.stopPropagation();
+
+            const orderDate = new Date(order.date);
+            const statusClass = order.status === 'confirmed' ? 'processing' : order.status;
+
+            modalContent.innerHTML = `
+                <div class="modal-header">
+                    <h2><i class="fas fa-receipt"></i> Order Details - ${order.id}</h2>
+                    <button class="close-btn" onclick="closeOrderDetailsModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <!-- Order Status Section -->
+                    <div class="order-status-section">
+                        <div class="status-badge ${statusClass}">
+                            <i class="fas fa-${statusClass === 'delivered' ? 'check-circle' : statusClass === 'shipped' ? 'truck' : 'clock'}"></i>
+                            ${statusClass.charAt(0).toUpperCase() + statusClass.slice(1)}
+                        </div>
+                        <div class="order-date-info">
+                            <p><i class="fas fa-calendar"></i> Placed on ${orderDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                            <p><i class="fas fa-clock"></i> ${orderDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</p>
+                        </div>
+                    </div>
+
+                    <!-- Customer Information -->
+                    <div class="info-section">
+                        <h3><i class="fas fa-user"></i> Customer Information</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <label>Name:</label>
+                                <span>${order.customer.firstName} ${order.customer.lastName}</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Email:</label>
+                                <span>${order.customer.email}</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Phone:</label>
+                                <span>${order.customer.phone}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delivery Address -->
+                    <div class="info-section">
+                        <h3><i class="fas fa-map-marker-alt"></i> Delivery Address</h3>
+                        <div class="address-details">
+                            <p>${order.customer.address.street}</p>
+                            <p>${order.customer.address.city}, ${order.customer.address.state} ${order.customer.address.zipCode}</p>
+                            <p>${order.customer.address.country}</p>
+                        </div>
+                    </div>
+
+                    <!-- Products Ordered -->
+                    <div class="info-section">
+                        <h3><i class="fas fa-shopping-bag"></i> Products Ordered</h3>
+                        <div class="products-list">
+                            ${order.items.map(item => `
+                                <div class="product-detail-item">
+                                    <img src="${item.image}" alt="${item.name}" class="product-detail-image">
+                                    <div class="product-detail-info">
+                                        <h4>${item.name}</h4>
+                                        <p class="product-category">${item.category || 'General'}</p>
+                                        <div class="product-meta">
+                                            <span class="quantity">Qty: ${item.quantity}</span>
+                                            <span class="price">₹${item.price.toFixed(2)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Payment Information -->
+                    <div class="info-section">
+                        <h3><i class="fas fa-credit-card"></i> Payment Information</h3>
+                        <div class="payment-details">
+                            <div class="payment-method">
+                                <i class="fas fa-${order.payment.method === 'creditCard' ? 'credit-card' : order.payment.method === 'upi' ? 'mobile-alt' : order.payment.method === 'netBanking' ? 'university' : 'money-bill-wave'}"></i>
+                                <span>${order.payment.method.charAt(0).toUpperCase() + order.payment.method.slice(1)}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Summary -->
+                    <div class="info-section">
+                        <h3><i class="fas fa-calculator"></i> Order Summary</h3>
+                        <div class="order-summary-details">
+                            <div class="summary-row">
+                                <span>Subtotal:</span>
+                                <span>₹${order.totals.subtotal.toFixed(2)}</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Delivery Charges:</span>
+                                <span>₹${order.totals.shipping.toFixed(2)}</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Tax (GST):</span>
+                                <span>₹${order.totals.tax.toFixed(2)}</span>
+                            </div>
+                            <div class="summary-row total-row">
+                                <span>Total Amount:</span>
+                                <span>₹${order.totals.total.toFixed(2)}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn-secondary" onclick="closeOrderDetailsModal()">
+                        <i class="fas fa-times"></i>
+                        Close
+                    </button>
+                    <button class="btn-primary" onclick="downloadOrderBill('${order.id}')">
+                        <i class="fas fa-download"></i>
+                        Download Bill
+                    </button>
+                    <button class="btn-secondary" onclick="reorderItems('${order.id}')">
+                        <i class="fas fa-redo"></i>
+                        Reorder
+                    </button>
+                </div>
+            `;
+
+            modalOverlay.appendChild(modalContent);
+            document.body.appendChild(modalOverlay);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeOrderDetailsModal() {
+            const modal = document.querySelector('.modal-overlay');
+            if (modal) {
+                modal.remove();
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function clearAllOrderHistory() {
+            // Clear order history from localStorage directly
+            localStorage.removeItem('orderHistory');
+            localStorage.removeItem('bills');
+            localStorage.setItem('billsDeleted', 'true');
+
+            // Reload the page to show empty state
+            loadOrderHistory();
+
+            // Show success message
+            alert('All order history has been cleared successfully!');
+        }
+    </script>
+</body>
+
+</html>

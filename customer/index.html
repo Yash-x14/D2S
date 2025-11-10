@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Svasthyaa E-Commerce</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="index-page">
+    <!-- Announcement Bar -->
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img src="logo.png" alt="Svasthyaa Logo" class="website-logo">
+        </div>
+        <div class="navbar-right">
+            <button class="search-btn"><i class="fas fa-search"></i></button>
+            <a href="index.html" class="nav-btn">Home</a>
+            <a href="variety.html" class="nav-btn">All Products</a>
+            <a href="blog.html" class="nav-btn">Blog</a>
+            <a href="contact.html" class="nav-btn">Contact</a>
+            <a href="cart.html" class="nav-btn cart-btn"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+            <a href="/auth" class="nav-btn"><i class="fas fa-user"></i> Customer Login</a>
+        </div>
+    </nav>
+
+    <!-- Hero Slider Section -->
+    <section class="hero-slider">
+        <div class="slider-track">
+            <div class="slide active">
+                <div class="slide-left">
+                    <img src="./images/chips2.jpg" alt="Green Goddess Chicken Salad">
+                </div>
+                <div class="slide-right">
+                    <div class="slide-content">
+
+                        <h2 class="slide-title">Crispy, bold <br> Golden chips</h2>
+                        <p class="slide-desc">Dive into the crunch with every bite - Our golden, perfectly seasoned chips will have you reaching for more. Taste the pice> Feel the Crunch.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="slide-left">
+                    <img src="./images/namkeen.jpg" alt="Classic Caesar Salad">
+                </div>
+                <div class="slide-right">
+                    <div class="slide-content">
+                        < <h2 class="slide-title">Classic flavorfull<br>Namkeen</h2>
+
+                            <p class="slide-desc">Spicy, Crispy and absolutely fresh. Our namkeen makes your tea-time momennts even more delightful</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="slide-left">
+                    <img src="./images/biscuit.jpg" alt="Protein Power Bowl">
+                </div>
+                <div class="slide-right">
+                    <div class="slide-content">
+                        <h2 class="slide-title">Golden bake<br>delicious Biscuits</h2>
+
+                        <p class="slide-desc">Packed with protein-rich ingredients for a healthy, filling meal.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="slide-left">
+                    <img src="./images/chocolate.jpg" alt="Egg & Veggie Salad">
+                </div>
+                <div class="slide-right">
+                    <div class="slide-content">
+                        <h2 class="slide-title">Smooth rich,<br>creamy chocolate</h2>
+                        <p class="slide-desc">"Happiness, Wrapped in Chocolate." Our chocolate melts in your mouth and melts your heart.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="slide-left">
+                    <img src="./images/cold_drinks.jpg" alt="Mediterranean Quinoa Bowl">
+                </div>
+                <div class="slide-right">
+                    <div class="slide-content">
+                        <h2 class="slide-title">"Pop Fizz, Refreash."<br> Cold Drinks </h2>
+                        <p class="slide-desc">"Open the chill taste the thrill! Our cold drink is your instant refreshmwnt, anytime, anywhere."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="slider-arrow left"><i class="fas fa-chevron-left"></i></button>
+        <button class="slider-arrow right"><i class="fas fa-chevron-right"></i></button>
+        <div class="slider-indicators">
+            <span class="indicator active"></span>
+            <span class="indicator"></span>
+            <span class="indicator"></span>
+            <span class="indicator"></span>
+            <span class="indicator"></span>
+        </div>
+    </section>
+
+    <!-- Category/Preference Filters -->
+    <section class="filters">
+        <button class="filter-btn active">Best Sellers</button>
+        <button class="filter-btn">Chips</button>
+        <button class="filter-btn">Namkeen</button>
+        <button class="filter-btn">Chocolates</button>
+        <button class="filter-btn">Biscuits</button>
+        <button class="filter-btn">Drinks</button>
+    </section>
+
+    <!-- Product Grid -->
+    <section class="product-slider-section">
+        <div class="slider-nav">
+            <span class="slider-nav-item active">Snacks</span>
+            <span class="slider-nav-item">Delights</span>
+            <span class="slider-nav-item">Drinks</span>
+            <span class="slider-cart"><i class="fas fa-shopping-cart"></i></span>
+        </div>
+        <div class="slider-content">
+            <div class="slider-left">
+                <div class="slider-price">$32</div>
+                <h2 class="slider-title">Green Goddess<br>Chicken Salad</h2>
+                <p class="slider-desc">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+            </div>
+            <div class="slider-right">
+                <div class="slider-circle">
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=400&fit=crop&crop=center" class="slider-main-img" alt="Main Product">
+                    <img src="https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=200&h=200&fit=crop&crop=center" class="slider-mini-img mini1" alt="Chips">
+                    <img src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=200&h=200&fit=crop&crop=center" class="slider-mini-img mini2" alt="Chocolate">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=200&h=200&fit=crop&crop=center" class="slider-mini-img mini3" alt="Namkeen">
+                    <img src="https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=200&h=200&fit=crop&crop=center" class="slider-mini-img mini4" alt="Juice">
+                </div>
+            </div>
+        </div>
+        <div class="slider-arrows">
+            <button class="slider-arrow left"><i class="fas fa-arrow-down"></i></button>
+            <button class="slider-arrow right"><i class="fas fa-arrow-down"></i></button>
+        </div>
+        <div class="slider-socials">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-main">
+            <div class="footer-content">
+                <!-- Company Information Section -->
+                <div class="footer-section company-info">
+                    <div class="logo-section">
+                        <h3 class="footer-logo">Svasthyaa <span class="logo-accent">E-Commerce</span></h3>
+
+                    </div>
+                    <div class="social-media-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+
+                    </div>
+                </div>
+
+                <!-- My Account Section -->
+                <div class="footer-section">
+                    <h4 class="section-title">MY ACCOUNT</h4>
+                    <ul class="footer-links">
+                        <li><a href="personal-information.html">Personal Information</a></li>
+                        <li><a href="order-history.html">Order History</a></li>
+                        <li><a href="download-bills.html">Download Bills</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Us Section -->
+                <div class="footer-section contact-section">
+                    <h4 class="section-title">CONTACT US</h4>
+                    <p class="contact-description">Lorem ipsum dolor sit amet conseret adipiscing elit sed diam nonunem.</p>
+                    <form class="email-subscription">
+                        <input type="email" placeholder="Your Email" class="email-input">
+                        <button type="submit" class="subscribe-btn"><i class="fas fa-envelope"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="utils.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>
